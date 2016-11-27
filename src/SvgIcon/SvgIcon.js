@@ -1,10 +1,7 @@
 import React, {Component, PropTypes} from 'react';
-import {
-  Text,
-  Platform
-} from 'react-native'
 import Svg from '../react-native-svg';
 import transitions from '../styles/transitions';
+import {IS_WEB} from '../utils/platform';
 
 class SvgIcon extends Component {
   static muiName = 'SvgIcon';
@@ -87,28 +84,25 @@ class SvgIcon extends Component {
     const offColor = color ? color : 'currentColor';
     const onColor = hoverColor ? hoverColor : offColor;
 
-    const mergedStyles = {
-      // display: 'inline-block',
-      // color: svgIcon.color,
-      // fill: this.state.hovered ? onColor : offColor,
+    const mergedStyles = Object.assign({
       height: 24,
       width: 24,
-      // userSelect: 'none',
-      // transition: transitions.easeOut(),
-    };
+    }, IS_WEB ? {
+      display: 'inline-block',
+      color: svgIcon.color,
+      fill: this.state.hovered ? onColor : offColor,
+      userSelect: 'none',
+      transition: transitions.easeOut(),
+    } : {});
     const pathStyles = Object.assign({
-      // display: 'inline-block',
       color: svgIcon.color,
       fill: this.state.hovered ? onColor : offColor,
       height: 24,
       width: 24,
-      // userSelect: 'none',
-      // transition: transitions.easeOut(),
     }, style);
     const filled = React.Children.map(children,
      (child) => React.cloneElement(child, pathStyles)
     );
-    // return <Text>SVG Icon</Text>
     return (<Svg
       {...other}
       onMouseEnter={this.handleMouseEnter}
