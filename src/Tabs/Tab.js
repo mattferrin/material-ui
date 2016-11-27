@@ -132,10 +132,10 @@ class Tab extends Component {
         touchRippleOpacity={rippleOpacity}
         onTouchTap={this.handleTouchTap}
       >
-        <div style={styles.button} >
+        <View style={styles.button} >
           {iconElement}
           {label}
-        </div>
+        </View>
       </EnhancedButton>
     );
   }

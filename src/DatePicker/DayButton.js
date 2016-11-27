@@ -124,15 +124,15 @@ class DayButton extends Component {
         onTouchTap={this.handleTouchTap}
         style={styles.root}
       >
-        <div style={prepareStyles(styles.buttonState)} />
-        <span style={prepareStyles(styles.label)}>
+        <View style={prepareStyles(styles.buttonState)} />
+        <View style={prepareStyles(styles.label)}>
           {new DateTimeFormat(locale, {
             day: 'numeric',
           }).format(date)}
-        </span>
+        </View>
       </EnhancedButton>
     ) : (
-      <span style={prepareStyles(styles.root)} />
+      <View style={prepareStyles(styles.root)} />
     );
   }
 }

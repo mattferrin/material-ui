@@ -284,7 +284,7 @@ class DatePicker extends Component {
     const formatDate = formatDateProp || this.formatDate;
 
     return (
-      <div className={className} style={prepareStyles(Object.assign({}, style))}>
+      <View className={className} style={prepareStyles(Object.assign({}, style))}>
         <TextField
           {...other}
           onFocus={this.handleFocus}
@@ -313,7 +313,7 @@ class DatePicker extends Component {
           ref="dialogWindow"
           shouldDisableDate={shouldDisableDate}
         />
-      </div>
+      </View>
     );
   }
 }

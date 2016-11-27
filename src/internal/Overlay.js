@@ -76,9 +76,9 @@ class Overlay extends Component {
     const styles = getStyles(this.props, this.context);
 
     return (
-      <div {...other} ref="overlay" style={prepareStyles(Object.assign(styles.root, style))}>
+      <View {...other} ref="overlay" style={prepareStyles(Object.assign(styles.root, style))}>
         {autoLockScrolling && <AutoLockScrolling lock={show} />}
-      </div>
+      </View>
     );
   }
 }

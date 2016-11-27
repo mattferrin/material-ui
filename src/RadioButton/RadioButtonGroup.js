@@ -151,12 +151,12 @@ class RadioButtonGroup extends Component {
     }, this);
 
     return (
-      <div
+      <View
         style={prepareStyles(Object.assign({}, this.props.style))}
         className={this.props.className}
       >
         {options}
-      </div>
+      </View>
     );
   }
 }

@@ -192,23 +192,23 @@ class GridTile extends Component {
 
     if (title) {
       titleBar = (
-        <div key="titlebar" style={prepareStyles(styles.titleBar)}>
-          <div style={prepareStyles(styles.titleWrap)}>
-            <div style={prepareStyles(Object.assign(styles.title, titleStyle))}>
+        <View key="titlebar" style={prepareStyles(styles.titleBar)}>
+          <View style={prepareStyles(styles.titleWrap)}>
+            <View style={prepareStyles(Object.assign(styles.title, titleStyle))}>
               {title}
-            </div>
+            </View>
             {subtitle ? (
-              <div style={prepareStyles(styles.subtitle)}>
+              <View style={prepareStyles(styles.subtitle)}>
                 {subtitle}
-              </div>
+              </View>
             ) : null}
-          </div>
+          </View>
           {actionIcon ? (
-            <div style={prepareStyles(styles.actionIcon)}>
+            <View style={prepareStyles(styles.actionIcon)}>
               {actionIcon}
-            </div>
+            </View>
           ) : null}
-        </div>
+        </View>
       );
     }
 

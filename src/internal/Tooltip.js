@@ -1,4 +1,7 @@
 import React, {Component, PropTypes} from 'react';
+import {
+  View
+} from 'react-native';
 import transitions from '../styles/transitions';
 
 function getStyles(props, context, state) {
@@ -151,7 +154,7 @@ class Tooltip extends Component {
     const styles = getStyles(this.props, this.context, this.state);
 
     return (
-      <div
+      <View
         {...other}
         ref="tooltip"
         style={prepareStyles(Object.assign(
@@ -161,17 +164,17 @@ class Tooltip extends Component {
           this.props.style
         ))}
       >
-        <div
+        <View
           ref="ripple"
           style={prepareStyles(Object.assign(
             styles.ripple,
             this.props.show && styles.rippleWhenShown
           ))}
         />
-        <span style={prepareStyles(styles.label)}>
+        <View style={prepareStyles(styles.label)}>
           {label}
-        </span>
-      </div>
+        </View>
+      </View>
     );
   }
 }

@@ -312,7 +312,7 @@ class FloatingActionButton extends Component {
           focusRippleColor={styles.icon.color}
           touchRippleColor={styles.icon.color}
         >
-          <div
+          <View
             ref="overlay"
             style={prepareStyles(Object.assign(
               styles.overlay,
@@ -321,7 +321,7 @@ class FloatingActionButton extends Component {
           >
             {iconElement}
             {children}
-          </div>
+          </View>
         </EnhancedButton>
       </Paper>
     );

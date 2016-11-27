@@ -92,9 +92,9 @@ class StepContent extends Component {
     };
 
     return (
-      <div style={prepareStyles(Object.assign(styles.root, style))} {...other}>
-        {React.createElement(transition, transitionProps, <div style={{overflow: 'hidden'}}>{children}</div>)}
-      </div>
+      <View style={prepareStyles(Object.assign(styles.root, style))} {...other}>
+        {React.createElement(transition, transitionProps, <View style={{overflow: 'hidden'}}>{children}</View>)}
+      </View>
     );
   }
 }

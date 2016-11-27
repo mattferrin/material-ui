@@ -43,9 +43,9 @@ const StepConnector = (props, context) => {
   const {prepareStyles} = muiTheme;
 
   return (
-    <div style={prepareStyles(styles.wrapper)}>
-      <span style={prepareStyles(styles.line)} />
-    </div>
+    <View style={prepareStyles(styles.wrapper)}>
+      <View style={prepareStyles(styles.line)} />
+    </View>
   );
 };
 

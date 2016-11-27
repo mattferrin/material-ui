@@ -62,9 +62,9 @@ class Toolbar extends Component {
     const styles = getStyles(this.props, this.context);
 
     return (
-      <div {...other} className={className} style={prepareStyles(Object.assign({}, styles.root, style))}>
+      <View {...other} className={className} style={prepareStyles(Object.assign({}, styles.root, style))}>
         {children}
-      </div>
+      </View>
     );
   }
 }

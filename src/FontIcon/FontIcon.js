@@ -1,5 +1,7 @@
 import React, {Component, PropTypes} from 'react';
+import {Text} from 'react-native'
 import transitions from '../styles/transitions';
+import {IS_WEB} from '../utils/platform'
 
 function getStyles(props, context, state) {
   const {
@@ -12,14 +14,15 @@ function getStyles(props, context, state) {
   const onColor = hoverColor || offColor;
 
   return {
-    root: {
+    root: Object.assign({
       color: state.hovered ? onColor : offColor,
       position: 'relative',
       fontSize: baseTheme.spacing.iconSize,
+    }, IS_WEB ? {
       display: 'inline-block',
       userSelect: 'none',
       transition: transitions.easeOut(),
-    },
+    } : {}),
   };
 }
 
@@ -90,14 +93,14 @@ class FontIcon extends Component {
 
     const {prepareStyles} = this.context.muiTheme;
     const styles = getStyles(this.props, this.context, this.state);
-
-    return (
-      <span
-        {...other}
-        onMouseLeave={this.handleMouseLeave}
-        onMouseEnter={this.handleMouseEnter}
-        style={prepareStyles(Object.assign(styles.root, style))}
-      />
+    return React.createElement(
+      IS_WEB ? 'span' : Text,
+      {
+        ...other,
+        onMouseLeave:this.handleMouseLeave,
+        onMouseEnter:this.handleMouseEnter,
+        style:prepareStyles(Object.assign(styles.root, style)),
+      }
     );
   }
 }

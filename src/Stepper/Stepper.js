@@ -93,9 +93,9 @@ class Stepper extends Component {
     });
 
     return (
-      <div style={prepareStyles(Object.assign(styles.root, style))}>
+      <View style={prepareStyles(Object.assign(styles.root, style))}>
         {steps}
-      </div>
+      </View>
     );
   }
 }

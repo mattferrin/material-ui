@@ -7,6 +7,7 @@ import {
   darkWhite,
   lightWhite,
 } from './colors';
+import { IS_WEB } from '../utils/platform';
 
 class Typography {
 
@@ -21,9 +22,9 @@ class Typography {
     this.textLightWhite = lightWhite;
 
     // font weight
-    this.fontWeightLight = 300;
-    this.fontWeightNormal = 400;
-    this.fontWeightMedium = 500;
+    this.fontWeightLight = IS_WEB ? 300 : '300';
+    this.fontWeightNormal = IS_WEB ? 400 : '400';
+    this.fontWeightMedium = IS_WEB ? 500 : '500';
 
     this.fontStyleButtonFontSize = 14;
   }

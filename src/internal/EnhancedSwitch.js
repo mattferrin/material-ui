@@ -350,31 +350,31 @@ class EnhancedSwitch extends Component {
     // If toggle component (indicated by whether the style includes thumb) manually lay out
     // elements in order to nest ripple elements
     const switchOrThumbElement = !thumbStyle ? (
-      <div style={prepareStyles(wrapStyles)}>
+      <View style={prepareStyles(wrapStyles)}>
         {switchElement}
         {ripples}
-      </div>
+      </View>
     ) : (
-      <div style={prepareStyles(wrapStyles)}>
-        <div style={prepareStyles(Object.assign({}, trackStyle))} />
+      <View style={prepareStyles(wrapStyles)}>
+        <View style={prepareStyles(Object.assign({}, trackStyle))} />
         <Paper style={thumbStyle} zDepth={1} circle={true}> {ripples} </Paper>
-      </div>
+      </View>
     );
 
     const elementsInOrder = labelPosition === 'right' ? (
-      <div style={styles.controls}>
+      <View style={styles.controls}>
         {switchOrThumbElement}
         {labelElement}
-      </div>
+      </View>
     ) : (
-      <div style={styles.controls}>
+      <View style={styles.controls}>
         {labelElement}
         {switchOrThumbElement}
-      </div>
+      </View>
     );
 
     return (
-      <div ref="root" className={className} style={prepareStyles(Object.assign(styles.root, style))}>
+      <View ref="root" className={className} style={prepareStyles(Object.assign(styles.root, style))}>
         <EventListener
           target="window"
           onKeyDown={this.handleKeyDown}
@@ -382,7 +382,7 @@ class EnhancedSwitch extends Component {
         />
         {inputElement}
         {elementsInOrder}
-      </div>
+      </View>
     );
   }
 }

@@ -90,9 +90,9 @@ class YearButton extends Component {
         onTouchTap={this.handleTouchTap}
         style={styles.root}
       >
-        <span style={prepareStyles(styles.label)}>
+        <View style={prepareStyles(styles.label)}>
           {children}
-        </span>
+        </View>
       </EnhancedButton>
     );
   }

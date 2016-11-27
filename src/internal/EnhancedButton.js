@@ -1,6 +1,11 @@
 import React, {Component, PropTypes} from 'react';
+import {
+  Text,
+  View
+} from 'react-native';
 import {createChildFragment} from '../utils/childUtils';
 import Events from '../utils/events';
+import {IS_WEB} from '../utils/platform';
 import keycode from 'keycode';
 import FocusRipple from './FocusRipple';
 import TouchRipple from './TouchRipple';
@@ -10,7 +15,7 @@ let listening = false;
 let tabPressed = false;
 
 function injectStyle() {
-  if (!styleInjected) {
+  if (!styleInjected && IS_WEB) {
     // Remove inner padding and border in Firefox 4+.
     const style = document.createElement('style');
     style.innerHTML = `
@@ -22,15 +27,17 @@ function injectStyle() {
     `;
 
     document.body.appendChild(style);
-    styleInjected = true;
   }
+  styleInjected = true;
 }
 
 function listenForTabPresses() {
   if (!listening) {
-    Events.on(window, 'keydown', (event) => {
-      tabPressed = keycode(event) === 'tab';
-    });
+    if (IS_WEB) {
+      Events.on(window, 'keydown', (event) => {
+        tabPressed = keycode(event) === 'tab';
+      });
+    }
     listening = true;
   }
 }
@@ -72,7 +79,7 @@ class EnhancedButton extends Component {
   };
 
   static defaultProps = {
-    containerElement: 'button',
+    containerElement: IS_WEB ? 'button' : View,
     onBlur: () => {},
     onClick: () => {},
     onFocus: () => {},
@@ -286,10 +293,9 @@ class EnhancedButton extends Component {
       enhancedButton,
     } = this.context.muiTheme;
 
-    const mergedStyles = Object.assign({
+    let preMergedStyles = Object.assign({
       border: 10,
       boxSizing: 'border-box',
-      display: 'inline-block',
       fontFamily: this.context.muiTheme.baseTheme.fontFamily,
       WebkitTapHighlightColor: enhancedButton.tapHighlightColor, // Remove mobile color flashing (deprecated)
       cursor: disabled ? 'default' : 'pointer',
@@ -307,8 +313,11 @@ class EnhancedButton extends Component {
        */
       transform: disableTouchRipple && disableFocusRipple ? null : 'translate(0, 0)',
       verticalAlign: href ? 'middle' : null,
-    }, style);
+    }, IS_WEB ? {
+      display: 'inline-block',
+    } : {});
 
+    const mergedStyles = Object.assign(preMergedStyles, style);
 
     // Passing both background:none & backgroundColor can break due to object iteration order
     if (!mergedStyles.backgroundColor && !mergedStyles.background) {
@@ -316,13 +325,10 @@ class EnhancedButton extends Component {
     }
 
     if (disabled && href) {
-      return (
-        <span
-          {...other}
-          style={mergedStyles}
-        >
-          {children}
-        </span>
+      return React.createElement(
+        IS_WEB ? 'span' : View,
+        {...other,...{style:mergedStyles}},
+        children
       );
     }
 
@@ -338,7 +344,7 @@ class EnhancedButton extends Component {
       onKeyUp: this.handleKeyUp,
       onKeyDown: this.handleKeyDown,
       onTouchTap: this.handleTouchTap,
-      tabIndex: tabIndex,
+      tabIndex: disabled || disableKeyboardFocus ? -1 : tabIndex,
       type: type,
     };
     const buttonChildren = this.createButtonChildren();
@@ -347,7 +353,12 @@ class EnhancedButton extends Component {
       return React.cloneElement(containerElement, buttonProps, buttonChildren);
     }
 
-    return React.createElement(href ? 'a' : containerElement, buttonProps, buttonChildren);
+    let anchor = IS_WEB ? 'a' : Text;
+    return React.createElement(
+      href ? anchor : containerElement,
+      IS_WEB ? buttonProps : {},
+      buttonChildren
+    );
   }
 }
 

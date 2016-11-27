@@ -163,7 +163,7 @@ class Clock extends Component {
     }
 
     return (
-      <div style={prepareStyles(styles.root)}>
+      <View style={prepareStyles(styles.root)}>
         <TimeDisplay
           selectedTime={this.state.selectedTime}
           mode={this.state.mode}
@@ -173,11 +173,11 @@ class Clock extends Component {
           onSelectHour={this.setMode.bind(this, 'hour')}
           onSelectMin={this.setMode.bind(this, 'minute')}
         />
-        <div style={prepareStyles(styles.container)} >
-          <div style={prepareStyles(styles.circle)} />
+        <View style={prepareStyles(styles.container)} >
+          <View style={prepareStyles(styles.circle)} />
           {clock}
-        </div>
-      </div>
+        </View>
+      </View>
     );
   }
 }

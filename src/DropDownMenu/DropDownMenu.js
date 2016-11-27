@@ -285,20 +285,20 @@ class DropDownMenu extends Component {
     }
 
     return (
-      <div
+      <View
         {...other}
         ref="root"
         className={className}
         style={prepareStyles(Object.assign({}, styles.root, open && styles.rootWhenOpen, style))}
       >
         <ClearFix style={styles.control} onTouchTap={this.handleTouchTapControl}>
-          <div
+          <View
             style={prepareStyles(Object.assign({}, styles.label, open && styles.labelWhenOpen, labelStyle))}
           >
             {displayValue}
-          </div>
+          </View>
           <DropDownArrow style={Object.assign({}, styles.icon, iconStyle)} />
-          <div style={prepareStyles(Object.assign({}, styles.underline, underlineStyle))} />
+          <View style={prepareStyles(Object.assign({}, styles.underline, underlineStyle))} />
         </ClearFix>
         <Popover
           anchorOrigin={anchorOrigin}
@@ -319,7 +319,7 @@ class DropDownMenu extends Component {
             {children}
           </Menu>
         </Popover>
-      </div>
+      </View>
     );
   }
 }

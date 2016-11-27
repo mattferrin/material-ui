@@ -40,9 +40,9 @@ class AppCanvas extends Component {
     }, this);
 
     return (
-      <div style={prepareStyles(styles)}>
+      <View style={prepareStyles(styles)}>
         {newChildren}
-      </div>
+      </View>
     );
   }
 }

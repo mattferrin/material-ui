@@ -369,7 +369,7 @@ class Drawer extends Component {
     }
 
     return (
-      <div
+      <View
         className={className}
         style={style}
       >
@@ -385,7 +385,7 @@ class Drawer extends Component {
         >
           {children}
         </Paper>
-      </div>
+      </View>
     );
   }
 }

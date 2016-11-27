@@ -140,9 +140,9 @@ class Card extends Component {
 
     return (
       <Paper {...other} style={mergedStyles}>
-        <div style={containerMergedStyles}>
+        <View style={containerMergedStyles}>
           {newChildren}
-        </div>
+        </View>
       </Paper>
     );
   }

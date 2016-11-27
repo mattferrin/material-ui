@@ -149,22 +149,22 @@ class DateDisplay extends Component {
     }).format(selectedDate);
 
     return (
-      <div {...other} style={prepareStyles(styles.root, style)}>
+      <View {...other} style={prepareStyles(styles.root, style)}>
         <SlideInTransitionGroup style={styles.year} direction={this.state.transitionDirection}>
-          <div key={year} style={styles.yearTitle} onTouchTap={this.handleTouchTapYear}>
+          <View key={year} style={styles.yearTitle} onTouchTap={this.handleTouchTapYear}>
             {year}
-          </div>
+          </View>
         </SlideInTransitionGroup>
         <SlideInTransitionGroup style={styles.monthDay} direction={this.state.transitionDirection}>
-          <div
+          <View
             key={dateTime}
             onTouchTap={this.handleTouchTapMonthDay}
             style={styles.monthDayTitle}
           >
             {dateTime}
-          </div>
+          </View>
         </SlideInTransitionGroup>
-      </div>
+      </View>
     );
   }
 }

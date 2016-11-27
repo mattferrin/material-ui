@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import transitions from '../styles/transitions';
 import {createChildFragment} from '../utils/childUtils';
 import {fade} from '../utils/colorManipulator';
+import {IS_WEB} from '../utils/platform';
 import EnhancedButton from '../internal/EnhancedButton';
 import FlatButtonLabel from './FlatButtonLabel';
 
@@ -213,11 +214,13 @@ class FlatButton extends Component {
     const labelStyleIcon = {};
 
     if (icon) {
-      const iconStyles = Object.assign({
-        verticalAlign: 'middle',
+      preIconStyles = Object.assign({
         marginLeft: label && labelPosition !== 'before' ? 12 : 0,
         marginRight: label && labelPosition === 'before' ? 12 : 0,
-      }, icon.props.style);
+      }, IS_WEB ? {
+        verticalAlign: 'middle',
+      } : {});
+      const iconStyles = Object.assign(preIconStyles, icon.props.style);
       iconCloned = React.cloneElement(icon, {
         color: icon.props.color || mergedRootStyles.color,
         style: iconStyles,
@@ -230,12 +233,15 @@ class FlatButton extends Component {
       }
     }
 
-    const mergedLabelStyles = Object.assign({
+    let preMergedLabelStyles = Object.assign({
       letterSpacing: 0,
-      textTransform: textTransform,
       fontWeight: fontWeight,
       fontSize: fontSize,
-    }, labelStyleIcon, labelStyle);
+      color: mergedRootStyles.color,
+    }, IS_WEB ? {
+      textTransform: textTransform,
+    } : {});
+    const mergedLabelStyles = Object.assign(preMergedLabelStyles, labelStyleIcon, labelStyle);
 
     const labelElement = label ? (
       <FlatButtonLabel label={label} style={mergedLabelStyles} />

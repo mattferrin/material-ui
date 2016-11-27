@@ -197,7 +197,7 @@ class RadioButton extends Component {
         labelStyle={mergedLabelStyle}
         labelPosition={labelPosition}
         onSwitch={this.handleSwitch}
-        switchElement={<div>{uncheckedElement}{checkedElement}</div>}
+        switchElement={<View>{uncheckedElement}{checkedElement}</View>}
       />
     );
   }

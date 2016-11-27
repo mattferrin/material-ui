@@ -99,15 +99,15 @@ class CardTitle extends Component {
     const extendedSubtitleStyle = Object.assign({}, styles.subtitle, subtitleStyle);
 
     return (
-      <div {...other} style={prepareStyles(rootStyle)}>
-        <span style={prepareStyles(extendedTitleStyle)}>
+      <View {...other} style={prepareStyles(rootStyle)}>
+        <View style={prepareStyles(extendedTitleStyle)}>
           {title}
-        </span>
-        <span style={prepareStyles(extendedSubtitleStyle)}>
+        </View>
+        <View style={prepareStyles(extendedSubtitleStyle)}>
           {subtitle}
-        </span>
+        </View>
         {children}
-      </div>
+      </View>
     );
   }
 }

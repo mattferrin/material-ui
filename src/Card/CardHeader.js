@@ -144,18 +144,18 @@ class CardHeader extends Component {
     }
 
     return (
-      <div {...other} style={prepareStyles(Object.assign(styles.root, style))}>
+      <View {...other} style={prepareStyles(Object.assign(styles.root, style))}>
         {avatar}
-        <div style={prepareStyles(Object.assign(styles.text, textStyle))}>
-          <span style={prepareStyles(Object.assign(styles.title, titleStyle))}>
+        <View style={prepareStyles(Object.assign(styles.text, textStyle))}>
+          <View style={prepareStyles(Object.assign(styles.title, titleStyle))}>
             {title}
-          </span>
-          <span style={prepareStyles(Object.assign(styles.subtitle, subtitleStyle))}>
+          </View>
+          <View style={prepareStyles(Object.assign(styles.subtitle, subtitleStyle))}>
             {subtitle}
-          </span>
-        </div>
+          </View>
+        </View>
         {children}
-      </div>
+      </View>
     );
   }
 }

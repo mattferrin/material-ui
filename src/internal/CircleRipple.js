@@ -92,9 +92,10 @@ class CircleRipple extends Component {
       backgroundColor: color,
     }, style);
 
-    return (
-      <div {...other} style={prepareStyles(mergedStyles)} />
-    );
+    return React.createElement(
+      IS_WEB ? 'div' : View,
+      {...other,...{style:prepareStyles(mergedStyles)}},
+    )
   }
 }
 

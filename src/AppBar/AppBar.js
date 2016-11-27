@@ -1,7 +1,12 @@
 import React, {Component, PropTypes, cloneElement} from 'react';
+import {
+  Text,
+  View
+} from 'react-native';
 import IconButton from '../IconButton';
 import NavigationMenu from '../svg-icons/navigation/menu';
 import Paper from '../Paper';
+import { IS_WEB } from '../utils/platform';
 import propTypes from '../utils/propTypes';
 import warning from 'warning';
 
@@ -17,37 +22,51 @@ export function getStyles(props, context) {
   const flatButtonSize = 36;
 
   const styles = {
-    root: {
+    root: Object.assign({
       position: 'relative',
       zIndex: zIndex.appBar,
-      width: '100%',
-      display: 'flex',
       backgroundColor: appBar.color,
       paddingLeft: appBar.padding,
       paddingRight: appBar.padding,
-    },
-    title: {
-      whiteSpace: 'nowrap',
+    }, IS_WEB ? {
+      width: '100%',
+      display: 'flex',
+    } : {
+      alignItems: 'center',
+      flex: 1,
+      flexDirection: 'row',
+      height: appBar.height,
+      paddingLeft: 16,
+      paddingRight: 16,
+    }),
+    title: Object.assign({
       overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      margin: 0,
-      paddingTop: 0,
       letterSpacing: 0,
       fontSize: 24,
       fontWeight: appBar.titleFontWeight,
       color: appBar.textColor,
+    }, IS_WEB ? {
+      whiteSpace: 'nowrap',
+      textOverflow: 'ellipsis',
+      margin: 0,
+      paddingTop: 0,
       height: appBar.height,
       lineHeight: `${appBar.height}px`,
-    },
-    mainElement: {
+    } : {
+      marginLeft: 32,
+    }),
+    mainElement: Object.assign({
+      flex: 1,
+    }, IS_WEB ? {
       boxFlex: 1,
       flex: '1',
-    },
-    iconButtonStyle: {
+    } : {}),
+    iconButtonStyle: Object.assign({
+      marginLeft: -16,
+    }, IS_WEB ? {
       marginTop: (appBar.height - iconButtonSize) / 2,
       marginRight: 8,
-      marginLeft: -16,
-    },
+    } : {}),
     iconButtonIconStyle: {
       fill: appBar.textColor,
       color: appBar.textColor,
@@ -207,7 +226,14 @@ class AppBar extends Component {
 
     // If the title is a string, wrap in an h1 tag.
     // If not, wrap in a div tag.
-    const titleComponent = typeof title === 'string' || title instanceof String ? 'h1' : 'div';
+    const titleComponent = (() => {
+      let isString = typeof title === 'string' || title instanceof String;
+      if (IS_WEB) {
+        return isString ? 'h1' : 'div';
+      } else {
+        return isString ? Text : View;
+      }
+    })()
 
     const titleElement = React.createElement(titleComponent, {
       onTouchTap: this.handleTitleTouchTap,
@@ -234,13 +260,12 @@ class AppBar extends Component {
         if (!iconElementLeft.props.onTouchTap && this.props.onLeftIconButtonTouchTap) {
           iconElementLeftProps.onTouchTap = this.handleTouchTapLeftIconButton;
         }
-
-        menuElementLeft = (
-          <div style={prepareStyles(iconLeftStyle)}>
-            {Object.keys(iconElementLeftProps).length > 0 ?
-              cloneElement(iconElementLeft, iconElementLeftProps) :
-              iconElementLeft}
-          </div>
+        menuElementLeft = React.createElement(
+          IS_WEB ? 'div' : View,
+          {style:prepareStyles(iconLeftStyle)},
+          Object.keys(iconElementLeftProps).length > 0 ?
+            cloneElement(iconElementLeft, iconElementLeftProps) :
+            iconElementLeft
         );
       } else {
         menuElementLeft = (
@@ -259,45 +284,43 @@ class AppBar extends Component {
       }
     }
 
-    const iconRightStyle = Object.assign({}, styles.iconButtonStyle, {
+    const iconRightStyle = Object.assign({}, styles.iconButtonStyle, IS_WEB ? {
       marginRight: -16,
       marginLeft: 'auto',
-    }, iconStyleRight);
+    } : {}, iconStyleRight);
 
     if (iconElementRight) {
       const iconElementRightProps = {};
 
-      switch (iconElementRight.type.muiName) {
-        case 'IconMenu':
-        case 'IconButton':
-          const iconElemRightChildren = iconElementRight.props.children;
-          const iconButtonIconStyle = !(
-            iconElemRightChildren &&
-            iconElemRightChildren.props &&
-            iconElemRightChildren.props.color
-          ) ? styles.iconButtonIconStyle : null;
+      if (IS_WEB || iconElementRight.type) {
+        switch (iconElementRight.type.muiName) {
+          case 'IconMenu':
+          case 'IconButton':
+            const iconElemRightChildren = iconElementRight.props.children;
+            const iconButtonIconStyle = !(
+              iconElemRightChildren &&
+              iconElemRightChildren.props &&
+              iconElemRightChildren.props.color
+            ) ? styles.iconButtonIconStyle : null;
 
-          iconElementRightProps.iconStyle = Object.assign({}, iconButtonIconStyle, iconElementRight.props.iconStyle);
-          break;
+            iconElementRightProps.iconStyle = Object.assign({}, iconButtonIconStyle, iconElementRight.props.iconStyle);
+            break;
 
-        case 'FlatButton':
-          iconElementRightProps.style = Object.assign({}, styles.flatButton, iconElementRight.props.style);
-          break;
+          case 'FlatButton':
+            iconElementRightProps.style = Object.assign({}, styles.flatButton, iconElementRight.props.style);
+            break;
 
-        default:
+          default:
+        }
       }
 
       if (!iconElementRight.props.onTouchTap && this.props.onRightIconButtonTouchTap) {
         iconElementRightProps.onTouchTap = this.handleTouchTapRightIconButton;
       }
 
-      menuElementRight = (
-        <div style={prepareStyles(iconRightStyle)}>
-          {Object.keys(iconElementRightProps).length > 0 ?
-            cloneElement(iconElementRight, iconElementRightProps) :
-            iconElementRight}
-        </div>
-      );
+      menuElementRight = React.createElement(IS_WEB ? 'div' : View, {style:prepareStyles(iconRightStyle)}, Object.keys(iconElementRightProps).length > 0 ?
+        cloneElement(iconElementRight, iconElementRightProps) :
+        iconElementRight);
     } else if (iconClassNameRight) {
       menuElementRight = (
         <IconButton

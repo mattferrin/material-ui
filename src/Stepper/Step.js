@@ -91,9 +91,9 @@ class Step extends Component {
     const styles = getStyles(this.props, this.context);
 
     return (
-      <div style={prepareStyles(Object.assign(styles.root, style))} {...other}>
+      <View style={prepareStyles(Object.assign(styles.root, style))} {...other}>
         {React.Children.map(children, this.renderChild)}
-      </div>
+      </View>
     );
   }
 }

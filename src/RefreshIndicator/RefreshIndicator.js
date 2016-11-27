@@ -103,7 +103,7 @@ class RefreshIndicator extends Component {
     if (this.props.status !== 'ready') {
       const circleStyle = this.getCircleStyle(paperSize);
       childrenCmp = (
-        <div
+        <View
           ref="wrapper"
           style={prepareStyles({
             transition: transitions.create('transform', '20s', null, 'linear'),
@@ -126,7 +126,7 @@ class RefreshIndicator extends Component {
               {...circleStyle.attr}
             />
           </svg>
-        </div>
+        </View>
       );
     } else {
       const circleStyle = this.getCircleStyle(paperSize);

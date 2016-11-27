@@ -77,16 +77,16 @@ class ClockPointer extends Component {
 
   render() {
     if (this.props.value === null) {
-      return <span />;
+      return <View />;
     }
 
     const styles = getStyles(this.props, this.context, this.state);
     const {prepareStyles} = this.context.muiTheme;
 
     return (
-      <div style={prepareStyles(styles.root)} >
-        <div style={prepareStyles(styles.mark)} />
-      </div>
+      <View style={prepareStyles(styles.root)} >
+        <View style={prepareStyles(styles.mark)} />
+      </View>
     );
   }
 }

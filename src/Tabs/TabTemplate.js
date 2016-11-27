@@ -14,9 +14,9 @@ const TabTemplate = ({children, selected, style}) => {
   }
 
   return (
-    <div style={templateStyle}>
+    <View style={templateStyle}>
       {children}
-    </div>
+    </View>
   );
 };
 

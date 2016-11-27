@@ -1,4 +1,8 @@
 import React, {Component, PropTypes} from 'react';
+import {
+  View
+} from 'react-native'
+import {IS_WEB} from '../utils/platform';
 import propTypes from '../utils/propTypes';
 import transitions from '../styles/transitions';
 
@@ -16,16 +20,17 @@ function getStyles(props, context) {
   } = context.muiTheme;
 
   return {
-    root: {
-      color: paper.color,
+    root: Object.assign({
       backgroundColor: paper.backgroundColor,
+      borderRadius: circle ? '50%' : rounded ? 2 : 0,
+    }, IS_WEB ? {
+      color: paper.color,
       transition: transitionEnabled && transitions.easeOut(),
       boxSizing: 'border-box',
       fontFamily: baseTheme.fontFamily,
       WebkitTapHighlightColor: 'rgba(0,0,0,0)', // Remove mobile color flashing (deprecated)
       boxShadow: paper.zDepthShadows[zDepth - 1], // No shadow for 0 depth papers
-      borderRadius: circle ? '50%' : rounded ? '2px' : '0px',
-    },
+    } : {}),
   };
 }
 
@@ -83,10 +88,13 @@ class Paper extends Component {
     const {prepareStyles} = this.context.muiTheme;
     const styles = getStyles(this.props, this.context);
 
-    return (
-      <div {...other} style={prepareStyles(Object.assign(styles.root, style))}>
-        {children}
-      </div>
+    return React.createElement(
+      IS_WEB ? 'div' : View,
+      {
+        ...other,
+        style:prepareStyles(Object.assign(styles.root, style))
+      },
+      children
     );
   }
 }

@@ -199,10 +199,10 @@ class Checkbox extends Component {
     });
 
     const checkboxElement = (
-      <div>
+      <View>
         {unCheckedElement}
         {checkedElement}
-      </div>
+      </View>
     );
 
     const rippleColor = this.state.switched ? checkStyles.fill : boxStyles.fill;

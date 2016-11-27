@@ -1,9 +1,13 @@
 import InlineStylePrefixer from 'inline-style-prefixer';
 import warning from 'warning';
+import {IS_WEB} from './platform';
 
 let hasWarnedAboutUserAgent = false;
 
 export default function(muiTheme) {
+  if (!IS_WEB) {
+    return null; // react native, don't prefix things
+  }
   let userAgent = muiTheme.userAgent;
 
   if (userAgent === undefined && typeof navigator !== 'undefined') {

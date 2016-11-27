@@ -398,7 +398,7 @@ class TextField extends Component {
     const inputId = id || this.uniqueId;
 
     const errorTextElement = this.state.errorText && (
-      <div style={prepareStyles(styles.error)}>{this.state.errorText}</div>
+      <View style={prepareStyles(styles.error)}>{this.state.errorText}</View>
     );
 
     const floatingLabelTextElement = floatingLabelText && (
@@ -464,7 +464,7 @@ class TextField extends Component {
     }
 
     return (
-      <div
+      <View
         {...rootProps}
         className={className}
         style={prepareStyles(Object.assign(styles.root, style))}
@@ -495,7 +495,7 @@ class TextField extends Component {
           null
         }
         {errorTextElement}
-      </div>
+      </View>
     );
   }
 }

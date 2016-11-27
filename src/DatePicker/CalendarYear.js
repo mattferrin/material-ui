@@ -117,11 +117,11 @@ class CalendarYear extends Component {
     };
 
     return (
-      <div style={prepareStyles(styles.root)}>
-        <div style={prepareStyles(styles.child)}>
+      <View style={prepareStyles(styles.root)}>
+        <View style={prepareStyles(styles.child)}>
           {this.getYears()}
-        </div>
-      </div>
+        </View>
+      </View>
     );
   }
 }

@@ -485,7 +485,7 @@ class AutoComplete extends Component {
     );
 
     return (
-      <div style={prepareStyles(Object.assign(styles.root, style))} >
+      <View style={prepareStyles(Object.assign(styles.root, style))} >
         <TextField
           {...other}
           ref="searchTextField"
@@ -517,7 +517,7 @@ class AutoComplete extends Component {
         >
           {menu}
         </Popover>
-      </div>
+      </View>
     );
   }
 }

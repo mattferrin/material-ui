@@ -1,10 +1,11 @@
 import React from 'react';
 import pure from 'recompose/pure';
+import {Path} from '../../react-native-svg';
 import SvgIcon from '../../SvgIcon';
 
 let AvStop = (props) => (
   <SvgIcon {...props}>
-    <path d="M6 6h12v12H6z"/>
+    <Path d="M6 6h12v12H6z"/>
   </SvgIcon>
 );
 AvStop = pure(AvStop);

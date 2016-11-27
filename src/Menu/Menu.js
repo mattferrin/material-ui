@@ -484,7 +484,7 @@ class Menu extends Component {
 
     return (
       <ClickAwayListener onClickAway={this.handleClickAway}>
-        <div
+        <View
           onKeyDown={this.handleKeyDown}
           style={prepareStyles(mergedRootStyles)}
           ref="scrollContainer"
@@ -496,7 +496,7 @@ class Menu extends Component {
           >
             {newChildren}
           </List>
-        </div>
+        </View>
       </ClickAwayListener>
     );
   }

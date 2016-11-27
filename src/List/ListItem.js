@@ -369,12 +369,12 @@ class ListItem extends Component {
     );
 
     return (
-      <div
+      <View
         {...additionalProps}
         style={this.context.muiTheme.prepareStyles(mergedDivStyles)}
       >
         {contentChildren}
-      </div>
+      </View>
     );
   }
 
@@ -416,9 +416,9 @@ class ListItem extends Component {
     }
 
     return (
-      <div key={key} style={prepareStyles(styles)}>
+      <View key={key} style={prepareStyles(styles)}>
         {data}
-      </div>
+      </View>
     );
   }
 
@@ -671,7 +671,7 @@ class ListItem extends Component {
     const simpleLabel = !primaryTogglesNestedList && (leftCheckbox || rightToggle);
 
     return (
-      <div>
+      <View>
         {
           simpleLabel ? this.createLabelElement(styles, contentChildren, other) :
           disabled ? this.createDisabledElement(styles, contentChildren, other) : (
@@ -689,14 +689,14 @@ class ListItem extends Component {
               ref="enhancedButton"
               style={Object.assign({}, styles.root, style)}
             >
-              <div style={prepareStyles(Object.assign(styles.innerDiv, innerDivStyle))}>
+              <View style={prepareStyles(Object.assign(styles.innerDiv, innerDivStyle))}>
                 {contentChildren}
-              </div>
+              </View>
             </EnhancedButton>
           )
         }
         {nestedList}
-      </div>
+      </View>
     );
   }
 }

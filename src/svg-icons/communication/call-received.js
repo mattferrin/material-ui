@@ -1,10 +1,11 @@
 import React from 'react';
 import pure from 'recompose/pure';
+import {Path} from '../../react-native-svg';
 import SvgIcon from '../../SvgIcon';
 
 let CommunicationCallReceived = (props) => (
   <SvgIcon {...props}>
-    <path d="M20 5.41L18.59 4 7 15.59V9H5v10h10v-2H8.41z"/>
+    <Path d="M20 5.41L18.59 4 7 15.59V9H5v10h10v-2H8.41z"/>
   </SvgIcon>
 );
 CommunicationCallReceived = pure(CommunicationCallReceived);

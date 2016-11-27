@@ -377,7 +377,7 @@ class Popover extends Component {
 
   render() {
     return (
-      <div>
+      <View>
         <EventListener
           target="window"
           onScroll={this.handleScroll}
@@ -390,7 +390,7 @@ class Popover extends Component {
           useLayerForClickAway={this.props.useLayerForClickAway}
           render={this.renderLayer}
         />
-      </div>
+      </View>
     );
   }
 }

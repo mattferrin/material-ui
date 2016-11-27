@@ -1,5 +1,6 @@
 import React from 'react';
 import pure from 'recompose/pure';
+import {Path} from '../../react-native-svg';
 import SvgIcon from '../../SvgIcon';
 
 let SocialPublic = (props) => (

@@ -304,7 +304,7 @@ class Calendar extends Component {
     } = this.props;
 
     return (
-      <div style={prepareStyles(styles.root)}>
+      <View style={prepareStyles(styles.root)}>
         <EventListener
           target="window"
           onKeyDown={this.handleWindowKeyDown}
@@ -319,9 +319,9 @@ class Calendar extends Component {
           mode={this.props.mode}
           selectedDate={this.state.selectedDate}
         />
-        <div style={prepareStyles(styles.calendar)}>
+        <View style={prepareStyles(styles.calendar)}>
           {this.state.displayMonthDay &&
-            <div style={prepareStyles(styles.calendarContainer)}>
+            <View style={prepareStyles(styles.calendarContainer)}>
               <CalendarToolbar
                 DateTimeFormat={DateTimeFormat}
                 locale={locale}
@@ -330,13 +330,13 @@ class Calendar extends Component {
                 prevMonth={toolbarInteractions.prevMonth}
                 nextMonth={toolbarInteractions.nextMonth}
               />
-              <div style={prepareStyles(styles.weekTitle)}>
+              <View style={prepareStyles(styles.weekTitle)}>
                 {daysArray.map((event, i) => (
-                  <span key={i} style={weekTitleDayStyle}>
+                  <View key={i} style={weekTitleDayStyle}>
                     {localizedWeekday(DateTimeFormat, locale, i, firstDayOfWeek)}
-                  </span>
+                  </View>
                 ))}
-              </div>
+              </View>
               <SlideInTransitionGroup direction={this.state.transitionDirection} style={styles.transitionSlide}>
                 <CalendarMonth
                   DateTimeFormat={DateTimeFormat}
@@ -352,12 +352,12 @@ class Calendar extends Component {
                   shouldDisableDate={this.props.shouldDisableDate}
                 />
               </SlideInTransitionGroup>
-            </div>
+            </View>
           }
           {!this.state.displayMonthDay &&
-            <div style={prepareStyles(styles.yearContainer)}>
+            <View style={prepareStyles(styles.yearContainer)}>
               {this.yearSelector()}
-            </div>
+            </View>
           }
           {okLabel &&
             <CalendarActionButtons
@@ -368,8 +368,8 @@ class Calendar extends Component {
               onTouchTapOk={onTouchTapOk}
             />
           }
-        </div>
-      </div>
+        </View>
+      </View>
     );
   }
 }

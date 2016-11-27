@@ -1,4 +1,9 @@
 import React, {Component, PropTypes} from 'react';
+import {
+  Text,
+  Platform
+} from 'react-native'
+import Svg from '../react-native-svg';
 import transitions from '../styles/transitions';
 
 class SvgIcon extends Component {
@@ -82,27 +87,37 @@ class SvgIcon extends Component {
     const offColor = color ? color : 'currentColor';
     const onColor = hoverColor ? hoverColor : offColor;
 
-    const mergedStyles = Object.assign({
-      display: 'inline-block',
+    const mergedStyles = {
+      // display: 'inline-block',
+      // color: svgIcon.color,
+      // fill: this.state.hovered ? onColor : offColor,
+      height: 24,
+      width: 24,
+      // userSelect: 'none',
+      // transition: transitions.easeOut(),
+    };
+    const pathStyles = Object.assign({
+      // display: 'inline-block',
       color: svgIcon.color,
       fill: this.state.hovered ? onColor : offColor,
       height: 24,
       width: 24,
-      userSelect: 'none',
-      transition: transitions.easeOut(),
+      // userSelect: 'none',
+      // transition: transitions.easeOut(),
     }, style);
-
-    return (
-      <svg
-        {...other}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-        style={prepareStyles(mergedStyles)}
-        viewBox={viewBox}
-      >
-        {children}
-      </svg>
+    const filled = React.Children.map(children,
+     (child) => React.cloneElement(child, pathStyles)
     );
+    // return <Text>SVG Icon</Text>
+    return (<Svg
+      {...other}
+      onMouseEnter={this.handleMouseEnter}
+      onMouseLeave={this.handleMouseLeave}
+      style={prepareStyles(mergedStyles)}
+      viewBox={viewBox}
+    >
+      {filled}
+    </Svg>);
   }
 }
 

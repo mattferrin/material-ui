@@ -149,14 +149,14 @@ class StepLabel extends Component {
     const icon = this.renderIcon(completed, userIcon, styles);
 
     return (
-      <span style={prepareStyles(Object.assign(styles.root, style))} {...other}>
+      <View style={prepareStyles(Object.assign(styles.root, style))} {...other}>
         {icon && (
-          <span style={prepareStyles(Object.assign(styles.iconContainer, iconContainerStyle))}>
+          <View style={prepareStyles(Object.assign(styles.iconContainer, iconContainerStyle))}>
             {icon}
-          </span>
+          </View>
         )}
         {children}
-      </span>
+      </View>
     );
   }
 }

@@ -26,9 +26,9 @@ const Subheader = (props, context) => {
   };
 
   return (
-    <div {...other} style={prepareStyles(Object.assign(styles.root, style))}>
+    <View {...other} style={prepareStyles(Object.assign(styles.root, style))}>
       {children}
-    </div>
+    </View>
   );
 };
 

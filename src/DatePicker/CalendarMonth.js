@@ -60,9 +60,9 @@ class CalendarMonth extends Component {
 
     return weekArray.map((week, i) => {
       return (
-        <div key={i} style={styles.week}>
+        <View key={i} style={styles.week}>
           {this.getDayElements(week, i)}
-        </div>
+        </View>
       );
     }, this);
   }
@@ -99,9 +99,9 @@ class CalendarMonth extends Component {
 
   render() {
     return (
-      <div style={styles.root}>
+      <View style={styles.root}>
         {this.getWeekElements()}
-      </div>
+      </View>
     );
   }
 }

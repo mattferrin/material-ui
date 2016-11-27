@@ -157,12 +157,12 @@ class LinearProgress extends Component {
     const styles = getStyles(this.props, this.context);
 
     return (
-      <div {...other} style={prepareStyles(Object.assign(styles.root, style))}>
-        <div style={prepareStyles(styles.bar)}>
-          <div ref="bar1" style={prepareStyles(styles.barFragment1)} />
-          <div ref="bar2" style={prepareStyles(styles.barFragment2)} />
-        </div>
-      </div>
+      <View {...other} style={prepareStyles(Object.assign(styles.root, style))}>
+        <View style={prepareStyles(styles.bar)}>
+          <View ref="bar1" style={prepareStyles(styles.barFragment1)} />
+          <View ref="bar2" style={prepareStyles(styles.barFragment2)} />
+        </View>
+      </View>
     );
   }
 }

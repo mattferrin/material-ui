@@ -46,7 +46,7 @@ class ToolbarSeparator extends Component {
     const styles = getStyles(this.props, this.context);
 
     return (
-      <span {...other} className={className} style={prepareStyles(Object.assign({}, styles.root, style))} />
+      <View {...other} className={className} style={prepareStyles(Object.assign({}, styles.root, style))} />
     );
   }
 }

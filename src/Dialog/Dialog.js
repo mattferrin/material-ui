@@ -66,9 +66,9 @@ class TransitionItem extends Component {
     const {prepareStyles} = this.context.muiTheme;
 
     return (
-      <div {...other} style={prepareStyles(Object.assign({}, this.state.style, style))}>
+      <View {...other} style={prepareStyles(Object.assign({}, this.state.style, style))}>
         {children}
-      </div>
+      </View>
     );
   }
 }
@@ -290,9 +290,9 @@ class DialogInline extends Component {
     styles.title = Object.assign(styles.title, titleStyle);
 
     const actionsContainer = React.Children.count(actions) > 0 && (
-      <div className={actionsContainerClassName} style={prepareStyles(styles.actionsContainer)}>
+      <View className={actionsContainerClassName} style={prepareStyles(styles.actionsContainer)}>
         {React.Children.toArray(actions)}
-      </div>
+      </View>
     );
 
     let titleElement = title;
@@ -310,7 +310,7 @@ class DialogInline extends Component {
     }
 
     return (
-      <div className={className} style={prepareStyles(styles.root)}>
+      <View className={className} style={prepareStyles(styles.root)}>
         {open &&
           <EventListener
             target="window"
@@ -333,13 +333,13 @@ class DialogInline extends Component {
             >
               <Paper zDepth={4}>
                 {titleElement}
-                <div
+                <View
                   ref="dialogContent"
                   className={bodyClassName}
                   style={prepareStyles(styles.body)}
                 >
                   {children}
-                </div>
+                </View>
                 {actionsContainer}
               </Paper>
             </TransitionItem>
@@ -351,7 +351,7 @@ class DialogInline extends Component {
           style={styles.overlay}
           onTouchTap={this.handleTouchTapOverlay}
         />
-      </div>
+      </View>
     );
   }
 }

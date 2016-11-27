@@ -139,7 +139,7 @@ class DatePickerDialog extends Component {
     const Container = (container === 'inline' ? Popover : Dialog);
 
     return (
-      <div {...other} ref="root">
+      <View {...other} ref="root">
         <Container
           anchorEl={this.refs.root} // For Popover
           animation={animation || PopoverAnimationVertical} // For Popover
@@ -175,7 +175,7 @@ class DatePickerDialog extends Component {
             shouldDisableDate={shouldDisableDate}
           />
         </Container>
-      </div>
+      </View>
     );
   }
 }

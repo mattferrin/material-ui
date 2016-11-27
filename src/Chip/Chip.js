@@ -284,9 +284,9 @@ class Chip extends Component {
         style={Object.assign(styles.root, style)}
       >
         {avatar}
-        <span style={prepareStyles(Object.assign(styles.label, labelStyle))}>
+        <View style={prepareStyles(Object.assign(styles.label, labelStyle))}>
           {children}
-        </span>
+        </View>
         {deleteIcon}
       </EnhancedButton>
     );

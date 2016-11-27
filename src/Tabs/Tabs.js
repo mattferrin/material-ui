@@ -232,23 +232,23 @@ class Tabs extends Component {
       tabItemContainerStyle.width : '100%';
 
     return (
-      <div
+      <View
         style={prepareStyles(Object.assign({}, style))}
         {...other}
       >
-        <div style={prepareStyles(Object.assign(styles.tabItemContainer, tabItemContainerStyle))}>
+        <View style={prepareStyles(Object.assign(styles.tabItemContainer, tabItemContainerStyle))}>
           {tabs}
-        </div>
-        <div style={{width: inkBarContainerWidth}}>
+        </View>
+        <View style={{width: inkBarContainerWidth}}>
           {inkBar}
-        </div>
-        <div
+        </View>
+        <View
           style={prepareStyles(Object.assign({}, contentContainerStyle))}
           className={contentContainerClassName}
         >
           {tabContent}
-        </div>
-      </div>
+        </View>
+      </View>
     );
   }
 }

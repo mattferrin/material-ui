@@ -104,12 +104,12 @@ class Badge extends Component {
     const styles = getStyles(this.props, this.context);
 
     return (
-      <div {...other} style={prepareStyles(Object.assign({}, styles.root, style))}>
+      <View {...other} style={prepareStyles(Object.assign({}, styles.root, style))}>
         {children}
-        <span style={prepareStyles(Object.assign({}, styles.badge, badgeStyle))}>
+        <View style={prepareStyles(Object.assign({}, styles.badge, badgeStyle))}>
           {badgeContent}
-        </span>
-      </div>
+        </View>
+      </View>
     );
   }
 }

@@ -34,9 +34,9 @@ const TextFieldHint = (props) => {
   const styles = getStyles(props);
 
   return (
-    <div style={prepareStyles(Object.assign(styles.root, style))}>
+    <View style={prepareStyles(Object.assign(styles.root, style))}>
       {text}
-    </div>
+    </View>
   );
 };
 

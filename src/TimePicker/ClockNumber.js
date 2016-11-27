@@ -106,7 +106,7 @@ class ClockNumber extends Component {
     const clockNumber = this.props.value === 0 ? '00' : this.props.value;
 
     return (
-      <span style={prepareStyles(styles.root)}>{clockNumber}</span>
+      <View style={prepareStyles(styles.root)}>{clockNumber}</View>
     );
   }
 }

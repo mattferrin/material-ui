@@ -85,12 +85,12 @@ export const SnackbarBody = (props, context) => {
   );
 
   return (
-    <div {...other} style={prepareStyles(Object.assign(styles.root, style))}>
-      <div style={prepareStyles(Object.assign(styles.content, contentStyle))}>
-        <span>{message}</span>
+    <View {...other} style={prepareStyles(Object.assign(styles.root, style))}>
+      <View style={prepareStyles(Object.assign(styles.content, contentStyle))}>
+        <View>{message}</View>
         {actionButton}
-      </div>
-    </div>
+      </View>
+    </View>
   );
 };
 

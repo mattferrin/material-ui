@@ -771,10 +771,10 @@ class Slider extends Component {
     );
 
     return (
-      <div {...other} style={prepareStyles(Object.assign({}, style))}>
-        <span>{description}</span>
-        <span>{error}</span>
-        <div
+      <View {...other} style={prepareStyles(Object.assign({}, style))}>
+        <View>{description}</View>
+        <View>{error}</View>
+        <View
           style={prepareStyles(Object.assign({}, styles.slider, sliderStyle))}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
@@ -785,10 +785,10 @@ class Slider extends Component {
           onTouchStart={this.handleTouchStart}
           onKeyDown={!disabled && this.handleKeyDown}
         >
-          <div ref={(node) => this.track = node} style={prepareStyles(styles.track)}>
-            <div style={prepareStyles(styles.filled)} />
-            <div style={prepareStyles(styles.remaining)} />
-            <div
+          <View ref={(node) => this.track = node} style={prepareStyles(styles.track)}>
+            <View style={prepareStyles(styles.filled)} />
+            <View style={prepareStyles(styles.remaining)} />
+            <View
               ref={(node) => this.handle = node}
               style={prepareStyles(handleStyles)}
               tabIndex={0}
@@ -801,9 +801,9 @@ class Slider extends Component {
                   color={styles.rippleColor.fill}
                 />
               )}
-            </div>
-          </div>
-        </div>
+            </View>
+          </View>
+        </View>
         <input
           type="hidden"
           name={name}
@@ -813,7 +813,7 @@ class Slider extends Component {
           max={max}
           step={step}
         />
-      </div>
+      </View>
     );
   }
 }

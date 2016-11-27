@@ -140,10 +140,10 @@ class ClockMinutes extends Component {
     const minutes = this.getMinuteNumbers();
 
     return (
-      <div ref="clock" style={prepareStyles(styles.root)} >
+      <View ref="clock" style={prepareStyles(styles.root)} >
         <ClockPointer value={minutes.selected} type="minute" hasSelected={minutes.hasSelected} />
         {minutes.numbers}
-        <div
+        <View
           ref="mask"
           style={prepareStyles(styles.hitMask)}
           onTouchMove={this.handleTouch}
@@ -151,7 +151,7 @@ class ClockMinutes extends Component {
           onMouseUp={this.handleUp}
           onMouseMove={this.handleMove}
         />
-      </div>
+      </View>
     );
   }
 }

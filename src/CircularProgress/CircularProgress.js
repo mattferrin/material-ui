@@ -170,8 +170,8 @@ class CircularProgress extends Component {
     const styles = getStyles(this.props, this.context);
 
     return (
-      <div {...other} style={prepareStyles(Object.assign(styles.root, style))} >
-        <div ref="wrapper" style={prepareStyles(Object.assign(styles.wrapper, innerStyle))} >
+      <View {...other} style={prepareStyles(Object.assign(styles.root, style))} >
+        <View ref="wrapper" style={prepareStyles(Object.assign(styles.wrapper, innerStyle))} >
           <svg
             viewBox={`0 0 ${size} ${size}`}
             style={prepareStyles(styles.svg)}
@@ -187,8 +187,8 @@ class CircularProgress extends Component {
               strokeMiterlimit="20"
             />
           </svg>
-        </div>
-      </div>
+        </View>
+      </View>
     );
   }
 }

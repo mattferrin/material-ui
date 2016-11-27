@@ -32,7 +32,7 @@ class CalendarActionButton extends Component {
     };
 
     return (
-      <div style={styles.root} >
+      <View style={styles.root} >
         <FlatButton
           label={cancelLabel}
           onTouchTap={this.props.onTouchTapCancel}
@@ -48,7 +48,7 @@ class CalendarActionButton extends Component {
             style={styles.flatButtons}
           />
         }
-      </div>
+      </View>
     );
   }
 }

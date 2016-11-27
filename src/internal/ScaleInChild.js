@@ -90,9 +90,9 @@ class ScaleInChild extends Component {
     }, style);
 
     return (
-      <div {...other} style={prepareStyles(mergedRootStyles)}>
+      <View {...other} style={prepareStyles(mergedRootStyles)}>
         {children}
-      </div>
+      </View>
     );
   }
 }

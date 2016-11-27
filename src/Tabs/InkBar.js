@@ -40,7 +40,7 @@ class InkBar extends Component {
     const styles = getStyles(this.props, this.context);
 
     return (
-      <div style={prepareStyles(Object.assign(styles.root, style))} />
+      <View style={prepareStyles(Object.assign(styles.root, style))} />
     );
   }
 }

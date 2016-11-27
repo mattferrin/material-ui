@@ -77,13 +77,13 @@ class GridList extends Component {
         height: cellHeight === 'auto' ? 'auto' : cellHeight * childRows + padding,
       });
 
-      return <div style={prepareStyles(itemStyle)}>{currentChild}</div>;
+      return <View style={prepareStyles(itemStyle)}>{currentChild}</View>;
     });
 
     return (
-      <div style={prepareStyles(mergedRootStyles)} {...other}>
+      <View style={prepareStyles(mergedRootStyles)} {...other}>
         {wrappedChildren}
-      </div>
+      </View>
     );
   }
 }

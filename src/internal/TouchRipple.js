@@ -1,6 +1,10 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
+import {
+  View
+} from 'react-native'
 import ReactTransitionGroup from 'react-addons-transition-group';
+import {IS_WEB} from '../utils/platform';
 import Dom from '../utils/dom';
 import CircleRipple from './CircleRipple';
 
@@ -212,17 +216,16 @@ class TouchRipple extends Component {
       );
     }
 
-    return (
-      <div
-        onMouseUp={this.handleMouseUp}
-        onMouseDown={this.handleMouseDown}
-        onMouseLeave={this.handleMouseLeave}
-        onTouchStart={this.handleTouchStart}
-        onTouchEnd={this.handleTouchEnd}
-      >
-        {rippleGroup}
-        {children}
-      </div>
+    return React.createElement(
+      IS_WEB ? 'div' : View,
+      {
+        onMouseUp: this.handleMouseUp,
+        onMouseDown: this.handleMouseDown,
+        onMouseLeave: this.handleMouseLeave,
+        onTouchStart: this.handleTouchStart,
+        onTouchEnd: this.handleTouchEnd,
+      },
+      [rippleGroup, children]
     );
   }
 }

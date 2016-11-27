@@ -1,10 +1,11 @@
 import React from 'react';
 import pure from 'recompose/pure';
+import {Path} from '../../react-native-svg';
 import SvgIcon from '../../SvgIcon';
 
 let DeviceSignalCellular2Bar = (props) => (
   <SvgIcon {...props}>
-    <path fillOpacity=".3" d="M2 22h20V2z"/><path d="M14 10L2 22h12z"/>
+    <path fillOpacity=".3" d="M2 22h20V2z"/><Path d="M14 10L2 22h12z"/>
   </SvgIcon>
 );
 DeviceSignalCellular2Bar = pure(DeviceSignalCellular2Bar);

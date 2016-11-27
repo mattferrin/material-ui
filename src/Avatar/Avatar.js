@@ -104,7 +104,7 @@ class Avatar extends Component {
       );
     } else {
       return (
-        <div
+        <View
           {...other}
           style={prepareStyles(Object.assign(styles.root, style))}
           className={className}
@@ -114,7 +114,7 @@ class Avatar extends Component {
             style: Object.assign(styles.icon, icon.props.style),
           })}
           {this.props.children}
-        </div>
+        </View>
       );
     }
   }

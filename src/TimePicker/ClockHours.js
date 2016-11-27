@@ -167,14 +167,14 @@ class ClockHours extends Component {
     const numbers = this.getHourNumbers();
 
     return (
-      <div ref="clock" style={prepareStyles(styles.root)} >
+      <View ref="clock" style={prepareStyles(styles.root)} >
         <ClockPointer hasSelected={true} value={hours} type="hour" />
         {numbers}
-        <div
+        <View
           ref="mask" style={prepareStyles(styles.hitMask)} onTouchMove={this.handleTouchMove}
           onTouchEnd={this.handleTouchEnd} onMouseUp={this.handleUp} onMouseMove={this.handleMove}
         />
-      </div>
+      </View>
     );
   }
 }

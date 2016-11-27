@@ -274,11 +274,11 @@ class Table extends Component {
 
     if (fixedHeader) {
       headerTable = (
-        <div style={prepareStyles(Object.assign({}, headerStyle))}>
+        <View style={prepareStyles(Object.assign({}, headerStyle))}>
           <table className={className} style={mergedTableStyle}>
             {tHead}
           </table>
-        </div>
+        </View>
       );
     } else {
       inlineHeader = tHead;
@@ -287,11 +287,11 @@ class Table extends Component {
     if (tFoot !== undefined) {
       if (fixedFooter) {
         footerTable = (
-          <div style={prepareStyles(Object.assign({}, footerStyle))}>
+          <View style={prepareStyles(Object.assign({}, footerStyle))}>
             <table className={className} style={prepareStyles(mergedTableStyle)}>
               {tFoot}
             </table>
-          </div>
+          </View>
         );
       } else {
         inlineFooter = tFoot;
@@ -299,17 +299,17 @@ class Table extends Component {
     }
 
     return (
-      <div style={prepareStyles(Object.assign(styles.tableWrapper, wrapperStyle))}>
+      <View style={prepareStyles(Object.assign(styles.tableWrapper, wrapperStyle))}>
         {headerTable}
-        <div style={prepareStyles(Object.assign(styles.bodyTable, bodyStyle))} ref="tableDiv">
+        <View style={prepareStyles(Object.assign(styles.bodyTable, bodyStyle))} ref="tableDiv">
           <table className={className} style={mergedTableStyle} ref="tableBody">
             {inlineHeader}
             {inlineFooter}
             {tBody}
           </table>
-        </div>
+        </View>
         {footerTable}
-      </div>
+      </View>
     );
   }
 }

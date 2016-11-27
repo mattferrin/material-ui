@@ -236,10 +236,10 @@ class Toggle extends Component {
     const styles = getStyles(this.props, this.context, this.state);
 
     const toggleElement = (
-      <div style={prepareStyles(Object.assign({}, styles.toggleElement))}>
-        <div style={prepareStyles(Object.assign({}, styles.track))} />
+      <View style={prepareStyles(Object.assign({}, styles.toggleElement))}>
+        <View style={prepareStyles(Object.assign({}, styles.track))} />
         <Paper style={styles.thumb} circle={true} zDepth={1} />
-      </div>
+      </View>
     );
 
     const enhancedSwitchProps = {

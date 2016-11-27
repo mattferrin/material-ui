@@ -296,7 +296,7 @@ You should wrapped it with an <IconButton />.`);
     );
 
     return (
-      <div
+      <View
         ref="iconMenuContainer"
         className={className}
         onMouseDown={onMouseDown}
@@ -321,7 +321,7 @@ You should wrapped it with an <IconButton />.`);
         >
           {menu}
         </Popover>
-      </div>
+      </View>
     );
   }
 }

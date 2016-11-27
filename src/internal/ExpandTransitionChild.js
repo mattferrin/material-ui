@@ -102,9 +102,9 @@ class ExpandTransitionChild extends Component {
     }, style);
 
     return (
-      <div {...other} style={prepareStyles(mergedRootStyles)}>
-        <div ref="wrapper">{children}</div>
-      </div>
+      <View {...other} style={prepareStyles(mergedRootStyles)}>
+        <View ref="wrapper">{children}</View>
+      </View>
     );
   }
 }

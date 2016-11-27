@@ -1,4 +1,7 @@
 import React, {Component, cloneElement, PropTypes} from 'react';
+import {
+  Text
+} from 'react-native'
 import transitions from '../styles/transitions';
 import {fade} from '../utils/colorManipulator';
 import {createChildFragment} from '../utils/childUtils';
@@ -334,6 +337,7 @@ class RaisedButton extends Component {
   };
 
   render() {
+    return <Text>RaisedButton</Text>
     const {
       backgroundColor, // eslint-disable-line no-unused-vars
       buttonStyle,
@@ -371,9 +375,9 @@ class RaisedButton extends Component {
     };
 
     const labelElement = label && (
-      <span style={prepareStyles(Object.assign(styles.label, labelStyle))}>
+      <View style={prepareStyles(Object.assign(styles.label, labelStyle))}>
         {label}
-      </span>
+      </View>
     );
 
     const iconCloned = icon && cloneElement(icon, {
@@ -412,12 +416,12 @@ class RaisedButton extends Component {
           focusRippleOpacity={mergedRippleStyles.opacity}
           touchRippleOpacity={mergedRippleStyles.opacity}
         >
-          <div
+          <View
             ref="overlay"
             style={prepareStyles(Object.assign(styles.overlay, overlayStyle))}
           >
             {enhancedButtonChildren}
-          </div>
+          </View>
         </EnhancedButton>
       </Paper>
     );

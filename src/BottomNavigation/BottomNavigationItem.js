@@ -62,9 +62,9 @@ const BottomNavigationItem = (props, context) => {
   return (
     <EnhancedButton {...other} style={Object.assign({}, styles.root, style)}>
       {styledIcon}
-      <div style={prepareStyles(styles.label)}>
+      <View style={prepareStyles(styles.label)}>
         {label}
-      </div>
+      </View>
     </EnhancedButton>
   );
 };

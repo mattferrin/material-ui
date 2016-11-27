@@ -154,7 +154,7 @@ class EnhancedTextarea extends Component {
     }
 
     return (
-      <div style={prepareStyles(rootStyles)}>
+      <View style={prepareStyles(rootStyles)}>
         <EventListener target="window" onResize={this.handleResize} />
         <textarea
           ref="shadow"
@@ -173,7 +173,7 @@ class EnhancedTextarea extends Component {
           style={prepareStyles(textareaStyles)}
           onChange={this.handleChange}
         />
-      </div>
+      </View>
     );
   }
 }

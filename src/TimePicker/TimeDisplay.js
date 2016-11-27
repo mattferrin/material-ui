@@ -109,49 +109,49 @@ class TimeDisplay extends Component {
     let buttons = [];
     if (format === 'ampm') {
       buttons = [
-        <div
+        <View
           key="pm"
           style={prepareStyles(Object.assign({}, styles.clickable, affix === 'pm' ? {} : styles.inactive))}
           onTouchTap={() => onSelectAffix('pm')}
         >
           {'PM'}
-        </div>,
-        <div
+        </View>,
+        <View
           key="am"
           style={prepareStyles(Object.assign({},
             styles.affixTop, styles.clickable, affix === 'am' ? {} : styles.inactive))}
           onTouchTap={() => onSelectAffix('am')}
         >
           {'AM'}
-        </div>,
+        </View>,
       ];
     }
 
     return (
-      <div {...other} style={prepareStyles(styles.root)}>
-        <div style={prepareStyles(styles.text)}>
-          <div style={prepareStyles(Object.assign({}, styles.affix))} />
-          <div style={prepareStyles(styles.time)}>
-            <span
+      <View {...other} style={prepareStyles(styles.root)}>
+        <View style={prepareStyles(styles.text)}>
+          <View style={prepareStyles(Object.assign({}, styles.affix))} />
+          <View style={prepareStyles(styles.time)}>
+            <View
               style={prepareStyles(Object.assign({}, styles.clickable, mode === 'hour' ? {} : styles.inactive))}
               onTouchTap={onSelectHour}
             >
               {hour}
-            </span>
-            <span>:</span>
-            <span
+            </View>
+            <View>:</View>
+            <View
               style={prepareStyles(Object.assign({},
                 styles.clickable, mode === 'minute' ? {} : styles.inactive))}
               onTouchTap={onSelectMin}
             >
               {min}
-            </span>
-          </div>
-          <div style={prepareStyles(Object.assign({}, styles.affix))}>
+            </View>
+          </View>
+          <View style={prepareStyles(Object.assign({}, styles.affix))}>
             {buttons}
-          </div>
-        </div>
-      </div>
+          </View>
+        </View>
+      </View>
     );
   }
 }

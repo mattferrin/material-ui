@@ -197,7 +197,7 @@ class TimePicker extends Component {
     const {time} = this.state;
 
     return (
-      <div style={prepareStyles(Object.assign({}, style))}>
+      <View style={prepareStyles(Object.assign({}, style))}>
         <TextField
           {...other}
           style={textFieldStyle}
@@ -219,7 +219,7 @@ class TimePicker extends Component {
           autoOk={autoOk}
           style={dialogStyle}
         />
-      </div>
+      </View>
     );
   }
 }

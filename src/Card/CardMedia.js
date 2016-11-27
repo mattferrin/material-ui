@@ -127,19 +127,19 @@ class CardMedia extends Component {
     });
 
     return (
-      <div {...other} style={prepareStyles(rootStyle)}>
-        <div style={prepareStyles(extendedMediaStyle)}>
+      <View {...other} style={prepareStyles(rootStyle)}>
+        <View style={prepareStyles(extendedMediaStyle)}>
           {styledChildren}
-        </div>
+        </View>
         {overlay ?
-          <div style={prepareStyles(extendedOverlayContainerStyle)}>
-            <div style={prepareStyles(extendedOverlayStyle)}>
-              <div style={prepareStyles(extendedOverlayContentStyle)}>
+          <View style={prepareStyles(extendedOverlayContainerStyle)}>
+            <View style={prepareStyles(extendedOverlayStyle)}>
+              <View style={prepareStyles(extendedOverlayContentStyle)}>
                 {overlayChildren}
-              </div>
-            </div>
-          </div> : ''}
-      </div>
+              </View>
+            </View>
+          </View> : ''}
+      </View>
     );
   }
 }

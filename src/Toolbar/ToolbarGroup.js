@@ -36,7 +36,7 @@ function getStyles(props, context) {
         borderRadius: 0,
       },
       underline: {
-        display: 'none',
+        // display: 'none',
       },
     },
     button: {
@@ -149,9 +149,9 @@ class ToolbarGroup extends Component {
     }, this);
 
     return (
-      <div {...other} className={className} style={prepareStyles(Object.assign({}, styles.root, style))}>
+      <View {...other} className={className} style={prepareStyles(Object.assign({}, styles.root, style))}>
         {newChildren}
-      </div>
+      </View>
     );
   }
 }

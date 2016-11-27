@@ -106,10 +106,10 @@ const TextFieldUnderline = (props) => {
   if (error) focusedUnderline = Object.assign({}, focusedUnderline, styles.error);
 
   return (
-    <div>
+    <View>
       <hr style={prepareStyles(underline)} />
       <hr style={prepareStyles(focusedUnderline)} />
-    </div>
+    </View>
   );
 };
 

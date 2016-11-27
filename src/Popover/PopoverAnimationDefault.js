@@ -91,11 +91,11 @@ class PopoverAnimationDefault extends Component {
         zDepth={zDepth}
         className={className}
       >
-        <div style={prepareStyles(styles.horizontal)}>
-          <div style={prepareStyles(styles.vertical)}>
+        <View style={prepareStyles(styles.horizontal)}>
+          <View style={prepareStyles(styles.vertical)}>
             {this.props.children}
-          </div>
-        </div>
+          </View>
+        </View>
       </Paper>
     );
   }

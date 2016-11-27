@@ -61,9 +61,9 @@ class CardActions extends Component {
     });
 
     return (
-      <div {...other} style={prepareStyles(Object.assign(styles.root, style))}>
+      <View {...other} style={prepareStyles(Object.assign(styles.root, style))}>
         {styledChildren}
-      </div>
+      </View>
     );
   }
 }

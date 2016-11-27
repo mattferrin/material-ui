@@ -219,7 +219,7 @@ class Snackbar extends Component {
 
     return (
       <ClickAwayListener onClickAway={open ? this.componentClickAway : null}>
-        <div {...other} style={prepareStyles(Object.assign(styles.root, style))}>
+        <View {...other} style={prepareStyles(Object.assign(styles.root, style))}>
           <SnackbarBody
             action={action}
             contentStyle={contentStyle}
@@ -228,7 +228,7 @@ class Snackbar extends Component {
             onActionTouchTap={onActionTouchTap}
             style={bodyStyle}
           />
-        </div>
+        </View>
       </ClickAwayListener>
     );
   }

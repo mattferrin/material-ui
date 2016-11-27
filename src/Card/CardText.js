@@ -57,9 +57,9 @@ class CardText extends Component {
     const rootStyle = Object.assign(styles.root, style);
 
     return (
-      <div {...other} style={prepareStyles(rootStyle)}>
+      <View {...other} style={prepareStyles(rootStyle)}>
         {children}
-      </div>
+      </View>
     );
   }
 }
