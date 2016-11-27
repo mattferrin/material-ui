@@ -318,9 +318,13 @@ class AppBar extends Component {
         iconElementRightProps.onTouchTap = this.handleTouchTapRightIconButton;
       }
 
-      menuElementRight = React.createElement(IS_WEB ? 'div' : View, {style:prepareStyles(iconRightStyle)}, Object.keys(iconElementRightProps).length > 0 ?
-        cloneElement(iconElementRight, iconElementRightProps) :
-        iconElementRight);
+      menuElementRight = React.createElement(
+        IS_WEB ? 'div' : View,
+        {style:prepareStyles(iconRightStyle)},
+        Object.keys(iconElementRightProps).length > 0 ?
+          cloneElement(iconElementRight, iconElementRightProps) :
+          iconElementRight
+        );
     } else if (iconClassNameRight) {
       menuElementRight = (
         <IconButton
