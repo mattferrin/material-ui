@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import shallowEqual from 'recompose/shallowEqual';
 import autoPrefix from '../utils/autoPrefix';
+import {IS_WEB} from '../utils/platform';
 import transitions from '../styles/transitions';
 
 class CircleRipple extends Component {
