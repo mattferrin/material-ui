@@ -1,10 +1,12 @@
 import React, {Component, cloneElement, PropTypes} from 'react';
 import {
-  Text
+  Text,
+  View,
 } from 'react-native'
 import transitions from '../styles/transitions';
 import {fade} from '../utils/colorManipulator';
 import {createChildFragment} from '../utils/childUtils';
+import {IS_WEB} from '../utils/platform';
 import EnhancedButton from '../internal/EnhancedButton';
 import Paper from '../Paper';
 
@@ -63,23 +65,25 @@ function getStyles(props, context, state) {
   const borderRadius = 2;
 
   return {
-    root: {
-      display: 'inline-block',
+    root: Object.assign({
       transition: transitions.easeOut(),
+    }, IS_WEB ? {
+      display: 'inline-block',
       minWidth: fullWidth ? '100%' : button.minWidth,
-    },
-    button: {
+    } : {}),
+    button: Object.assign({
       position: 'relative',
       height: buttonHeight,
       lineHeight: `${buttonHeight}px`,
-      width: '100%',
       padding: 0,
       borderRadius: borderRadius,
       transition: transitions.easeOut(),
       backgroundColor: backgroundColor,
       // That's the default value for a button but not a link
       textAlign: 'center',
-    },
+    }, IS_WEB ? {
+      width: '100%',
+    } : {}),
     label: {
       position: 'relative',
       opacity: 1,
@@ -98,14 +102,14 @@ function getStyles(props, context, state) {
       marginLeft: label && labelPosition !== 'before' ? 12 : 0,
       marginRight: label && labelPosition === 'before' ? 12 : 0,
     },
-    overlay: {
+    overlay: Object.assign({
       height: buttonHeight,
       borderRadius: borderRadius,
       backgroundColor: (state.keyboardFocused || state.hovered) && !disabled &&
-        fade(labelColor, amount),
+      fade(labelColor, amount),
       transition: transitions.easeOut(),
       top: 0,
-    },
+    }, IS_WEB ? {} : {}),
     ripple: {
       color: labelColor,
       opacity: !(primary || secondary) ? 0.1 : 0.16,
@@ -337,7 +341,6 @@ class RaisedButton extends Component {
   };
 
   render() {
-    return <Text>RaisedButton</Text>
     const {
       backgroundColor, // eslint-disable-line no-unused-vars
       buttonStyle,
@@ -374,10 +377,17 @@ class RaisedButton extends Component {
       onKeyboardFocus: this.handleKeyboardFocus,
     };
 
-    const labelElement = label && (
-      <View style={prepareStyles(Object.assign(styles.label, labelStyle))}>
-        {label}
-      </View>
+    let viewOrText = (() => {
+      if (typeof label === 'string' || label instanceof String) {
+        return Text
+      } else {
+        return View
+      }
+    })();
+    const labelElement = label && React.createElement(
+      IS_WEB ? 'span' : viewOrText,
+      {style:prepareStyles(Object.assign(styles.label, labelStyle))},
+      label
     );
 
     const iconCloned = icon && cloneElement(icon, {
@@ -416,12 +426,14 @@ class RaisedButton extends Component {
           focusRippleOpacity={mergedRippleStyles.opacity}
           touchRippleOpacity={mergedRippleStyles.opacity}
         >
-          <View
-            ref="overlay"
-            style={prepareStyles(Object.assign(styles.overlay, overlayStyle))}
-          >
-            {enhancedButtonChildren}
-          </View>
+          {React.createElement(
+            IS_WEB ? 'div' : View,
+            {
+              ref:"overlay",
+              style:prepareStyles(Object.assign(styles.overlay, overlayStyle)),
+            },
+            enhancedButtonChildren
+          )}
         </EnhancedButton>
       </Paper>
     );

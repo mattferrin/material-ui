@@ -294,25 +294,25 @@ class EnhancedButton extends Component {
     } = this.context.muiTheme;
 
     let preMergedStyles = Object.assign({
-      border: 10,
-      boxSizing: 'border-box',
-      fontFamily: this.context.muiTheme.baseTheme.fontFamily,
-      WebkitTapHighlightColor: enhancedButton.tapHighlightColor, // Remove mobile color flashing (deprecated)
-      cursor: disabled ? 'default' : 'pointer',
-      textDecoration: 'none',
-      margin: 0,
-      padding: 0,
-      outline: 'none',
-      fontSize: 'inherit',
-      fontWeight: 'inherit',
-      /**
-       * This is needed so that ripples do not bleed
-       * past border radius.
-       * See: http://stackoverflow.com/questions/17298739/
-       * css-overflow-hidden-not-working-in-chrome-when-parent-has-border-radius-and-chil
-       */
-      transform: disableTouchRipple && disableFocusRipple ? null : 'translate(0, 0)',
-      verticalAlign: href ? 'middle' : null,
+      // border: 10,
+      // boxSizing: 'border-box',
+      // fontFamily: this.context.muiTheme.baseTheme.fontFamily,
+      // WebkitTapHighlightColor: enhancedButton.tapHighlightColor, // Remove mobile color flashing (deprecated)
+      // cursor: disabled ? 'default' : 'pointer',
+      // textDecoration: 'none',
+      // margin: 0,
+      // padding: 0,
+      // outline: 'none',
+      // fontSize: 'inherit',
+      // fontWeight: 'inherit',
+      // /**
+      //  * This is needed so that ripples do not bleed
+      //  * past border radius.
+      //  * See: http://stackoverflow.com/questions/17298739/
+      //  * css-overflow-hidden-not-working-in-chrome-when-parent-has-border-radius-and-chil
+      //  */
+      // transform: disableTouchRipple && disableFocusRipple ? null : 'translate(0, 0)',
+      // verticalAlign: href ? 'middle' : null,
     }, IS_WEB ? {
       display: 'inline-block',
     } : {});
@@ -324,9 +324,16 @@ class EnhancedButton extends Component {
       mergedStyles.background = 'none';
     }
 
+    let viewOrText = (() => {
+      if (typeof children === 'string' || children instanceof String) {
+        return Text
+      } else {
+        return View
+      }
+    })();
     if (disabled && href) {
       return React.createElement(
-        IS_WEB ? 'span' : View,
+        IS_WEB ? 'span' : viewOrText,
         {...other,...{style:mergedStyles}},
         children
       );
@@ -352,11 +359,17 @@ class EnhancedButton extends Component {
     if (React.isValidElement(containerElement)) {
       return React.cloneElement(containerElement, buttonProps, buttonChildren);
     }
-
-    let anchor = IS_WEB ? 'a' : Text;
+    let viewOrText2 = (() => {
+      if (typeof buttonChildren === 'string' || buttonChildren instanceof String) {
+        return Text
+      } else {
+        return View
+      }
+    })();
+    let anchor = IS_WEB ? 'a' : viewOrText2;
     return React.createElement(
       href ? anchor : containerElement,
-      IS_WEB ? buttonProps : {},
+      IS_WEB ? buttonProps : buttonProps,
       buttonChildren
     );
   }

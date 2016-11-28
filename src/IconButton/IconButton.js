@@ -5,6 +5,7 @@ import EnhancedButton from '../internal/EnhancedButton';
 import FontIcon from '../FontIcon';
 import Tooltip from '../internal/Tooltip';
 import {extendChildren} from '../utils/childUtils';
+import {IS_WEB} from '../utils/platform';
 
 function getStyles(props, context) {
   const {baseTheme} = context.muiTheme;
@@ -23,13 +24,14 @@ function getStyles(props, context) {
     tooltip: {
       boxSizing: 'border-box',
     },
-    overlay: {
+    overlay: Object.assign({
       position: 'relative',
       top: 0,
+      background: baseTheme.palette.disabledColor,
+    }, IS_WEB ? {
       width: '100%',
       height: '100%',
-      background: baseTheme.palette.disabledColor,
-    },
+    } : {}),
     disabled: {
       color: baseTheme.palette.disabledColor,
       fill: baseTheme.palette.disabledColor,

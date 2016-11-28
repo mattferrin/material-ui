@@ -82,15 +82,17 @@ class CircleRipple extends Component {
 
     const {prepareStyles} = this.context.muiTheme;
 
-    const mergedStyles = Object.assign({
+    let preMergedStyles = Object.assign({
       position: 'absolute',
       top: 0,
       left: 0,
-      height: '100%',
-      width: '100%',
       borderRadius: '50%',
       backgroundColor: color,
-    }, style);
+    }, IS_WEB ? {
+      height: '100%',
+      width: '100%',
+    } : {});
+    const mergedStyles = Object.assign(preMergedStyles, style);
 
     return React.createElement(
       IS_WEB ? 'div' : View,

@@ -200,14 +200,16 @@ class TouchRipple extends Component {
     let rippleGroup;
 
     if (hasRipples) {
-      const mergedStyles = Object.assign({
-        height: '100%',
-        width: '100%',
+      let preMergedStyles = Object.assign({
         position: 'absolute',
         top: 0,
         left: 0,
         overflow: 'hidden',
-      }, style);
+      }, IS_WEB ? {
+        height: '100%',
+        width: '100%',
+      } : {});
+      const mergedStyles = Object.assign(preMergedStyles, style);
 
       rippleGroup = (
         <ReactTransitionGroup style={prepareStyles(mergedStyles)}>

@@ -60,15 +60,17 @@ class FocusRipple extends Component {
 
     const {prepareStyles, ripple} = this.context.muiTheme;
 
-    const innerStyles = Object.assign({
+    let preInnerStyles = Object.assign({
       position: 'absolute',
-      height: '100%',
-      width: '100%',
       borderRadius: '50%',
       opacity: opacity ? opacity : 0.16,
       backgroundColor: color || ripple.color,
       transition: transitions.easeOut(`${pulsateDuration}ms`, 'transform', null, transitions.easeInOutFunction),
-    }, innerStyle);
+    }, IS_WEB ? {
+      height: '100%',
+      width: '100%',
+    } : {})
+    const innerStyles = Object.assign(preInnerStyles, innerStyle);
     return React.createElement(
       IS_WEB ? 'div' : View,
       {ref:"innerCircle",style:prepareStyles(Object.assign({}, innerStyles))}
