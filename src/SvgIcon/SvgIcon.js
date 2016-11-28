@@ -84,7 +84,7 @@ class SvgIcon extends Component {
     const offColor = color ? color : 'currentColor';
     const onColor = hoverColor ? hoverColor : offColor;
 
-    const mergedStyles = Object.assign({
+    const preMergedStyles = Object.assign({
       height: 24,
       width: 24,
     }, IS_WEB ? {
@@ -94,20 +94,15 @@ class SvgIcon extends Component {
       userSelect: 'none',
       transition: transitions.easeOut(),
     } : {});
-    const pathStyles = Object.assign({
-      color: svgIcon.color,
-      fill: this.state.hovered ? onColor : offColor,
-      height: 24,
-      width: 24,
-    }, style);
+    const mergedStyles = prepareStyles(Object.assign(preMergedStyles, style));
     const filled = React.Children.map(children,
-     (child) => React.cloneElement(child, pathStyles)
+     (child) => React.cloneElement(child, mergedStyles)
     );
     return (<Svg
       {...other}
       onMouseEnter={this.handleMouseEnter}
       onMouseLeave={this.handleMouseLeave}
-      style={prepareStyles(mergedStyles)}
+      style={mergedStyles}
       viewBox={viewBox}
     >
       {filled}

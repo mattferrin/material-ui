@@ -294,25 +294,25 @@ class EnhancedButton extends Component {
     } = this.context.muiTheme;
 
     let preMergedStyles = Object.assign({
-      // border: 10,
-      // boxSizing: 'border-box',
-      // fontFamily: this.context.muiTheme.baseTheme.fontFamily,
-      // WebkitTapHighlightColor: enhancedButton.tapHighlightColor, // Remove mobile color flashing (deprecated)
-      // cursor: disabled ? 'default' : 'pointer',
-      // textDecoration: 'none',
-      // margin: 0,
-      // padding: 0,
-      // outline: 'none',
-      // fontSize: 'inherit',
-      // fontWeight: 'inherit',
-      // /**
-      //  * This is needed so that ripples do not bleed
-      //  * past border radius.
-      //  * See: http://stackoverflow.com/questions/17298739/
-      //  * css-overflow-hidden-not-working-in-chrome-when-parent-has-border-radius-and-chil
-      //  */
-      // transform: disableTouchRipple && disableFocusRipple ? null : 'translate(0, 0)',
-      // verticalAlign: href ? 'middle' : null,
+      border: 10,
+      boxSizing: 'border-box',
+      fontFamily: this.context.muiTheme.baseTheme.fontFamily,
+      WebkitTapHighlightColor: enhancedButton.tapHighlightColor, // Remove mobile color flashing (deprecated)
+      cursor: disabled ? 'default' : 'pointer',
+      textDecoration: 'none',
+      margin: 0,
+      padding: 0,
+      outline: 'none',
+      fontSize: 'inherit',
+      fontWeight: 'inherit',
+      /**
+       * This is needed so that ripples do not bleed
+       * past border radius.
+       * See: http://stackoverflow.com/questions/17298739/
+       * css-overflow-hidden-not-working-in-chrome-when-parent-has-border-radius-and-chil
+       */
+      transform: disableTouchRipple && disableFocusRipple ? null : 'translate(0, 0)',
+      verticalAlign: href ? 'middle' : null,
     }, IS_WEB ? {
       display: 'inline-block',
     } : {});
