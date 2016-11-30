@@ -26,7 +26,6 @@ const Divider = (props, context) => {
       backgroundColor: baseTheme.palette.borderColor,
     },
   };
-
   return React.createElement(
     IS_WEB ? 'hr' : View,
     {
