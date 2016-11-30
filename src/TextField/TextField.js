@@ -1,7 +1,12 @@
 import React, {Component, PropTypes} from 'react';
+import {
+  TextInput,
+  View,
+} from 'react-native';
 import ReactDOM from 'react-dom';
 import shallowEqual from 'recompose/shallowEqual';
 import transitions from '../styles/transitions';
+import {IS_WEB} from '../utils/platform';
 import EnhancedTextarea from './EnhancedTextarea';
 import TextFieldHint from './TextFieldHint';
 import TextFieldLabel from './TextFieldLabel';
@@ -22,10 +27,9 @@ const getStyles = (props, context, state) => {
   } = context.muiTheme;
 
   const styles = {
-    root: {
+    root: Object.assign({
       fontSize: 16,
       lineHeight: '24px',
-      width: props.fullWidth ? '100%' : 256,
       height: (props.rows - 1) * 24 + (props.floatingLabelText ? 72 : 48),
       display: 'inline-block',
       position: 'relative',
@@ -33,7 +37,9 @@ const getStyles = (props, context, state) => {
       fontFamily: baseTheme.fontFamily,
       transition: transitions.easeOut('200ms', 'height'),
       cursor: props.disabled ? 'not-allowed' : 'auto',
-    },
+    }, IS_WEB ? {
+      width: props.fullWidth ? '100%' : 256,
+    } : {}),
     error: {
       position: 'relative',
       bottom: 2,
@@ -46,10 +52,9 @@ const getStyles = (props, context, state) => {
       color: props.disabled ? disabledTextColor : floatingLabelColor,
       pointerEvents: 'none',
     },
-    input: {
+    input: Object.assign({
       padding: 0,
       position: 'relative',
-      width: '100%',
       border: 'none',
       outline: 'none',
       backgroundColor: 'rgba(0,0,0,0)',
@@ -57,13 +62,13 @@ const getStyles = (props, context, state) => {
       cursor: 'inherit',
       font: 'inherit',
       WebkitTapHighlightColor: 'rgba(0,0,0,0)', // Remove mobile color flashing (deprecated style).
-    },
+    }, IS_WEB ? {
+      width: '100%',
+    } : {}),
     inputNative: {
       appearance: 'textfield', // Improve type search style.
     },
   };
-
-  Object.assign(styles.error, props.errorStyle);
 
   styles.textarea = Object.assign({}, styles.input, {
     marginTop: props.floatingLabelText ? 36 : 12,
@@ -73,7 +78,9 @@ const getStyles = (props, context, state) => {
   });
 
   // Do not assign a height to the textarea as he handles it on his own.
-  styles.input.height = '100%';
+  if (IS_WEB) {
+    styles.input.height = '100%';
+  }
 
   if (state.isFocused) {
     styles.floatingLabel.color = focusColor;
@@ -141,6 +148,10 @@ class TextField extends Component {
      * The style object to use to override floating label styles when focused.
      */
     floatingLabelFocusStyle: PropTypes.object,
+    /**
+     * The style object to use to override floating label styles when shrunk.
+     */
+    floatingLabelShrinkStyle: PropTypes.object,
     /**
      * The style object to use to override floating label styles.
      */
@@ -309,15 +320,21 @@ class TextField extends Component {
   }
 
   blur() {
-    if (this.input) this.getInputNode().blur();
+    if (this.input) {
+      this.getInputNode().blur();
+    }
   }
 
   focus() {
-    if (this.input) this.getInputNode().focus();
+    if (this.input) {
+      this.getInputNode().focus();
+    }
   }
 
   select() {
-    if (this.input) this.getInputNode().select();
+    if (this.input) {
+      this.getInputNode().select();
+    }
   }
 
   getValue() {
@@ -331,12 +348,16 @@ class TextField extends Component {
 
   handleInputBlur = (event) => {
     this.setState({isFocused: false});
-    if (this.props.onBlur) this.props.onBlur(event);
+    if (this.props.onBlur) {
+      this.props.onBlur(event);
+    }
   };
 
   handleInputChange = (event) => {
     this.setState({hasValue: isValid(event.target.value)});
-    if (this.props.onChange) this.props.onChange(event, event.target.value);
+    if (this.props.onChange) {
+      this.props.onChange(event, event.target.value);
+    }
   };
 
   handleInputFocus = (event) => {
@@ -370,6 +391,7 @@ class TextField extends Component {
       errorText, // eslint-disable-line no-unused-vars
       floatingLabelFixed,
       floatingLabelFocusStyle,
+      floatingLabelShrinkStyle,
       floatingLabelStyle,
       floatingLabelText,
       fullWidth, // eslint-disable-line no-unused-vars
@@ -397,8 +419,10 @@ class TextField extends Component {
     const styles = getStyles(this.props, this.context, this.state);
     const inputId = id || this.uniqueId;
 
-    const errorTextElement = this.state.errorText && (
-      <View style={prepareStyles(styles.error)}>{this.state.errorText}</View>
+    const errorTextElement = this.state.errorText && React.createElement(
+      IS_WEB ? 'div' : View,
+      {style:prepareStyles(Object.assign(styles.error, errorStyle))},
+      this.state.errorText
     );
 
     const floatingLabelTextElement = floatingLabelText && (
@@ -409,6 +433,7 @@ class TextField extends Component {
           floatingLabelStyle,
           this.state.isFocused ? floatingLabelFocusStyle : null
         )}
+        shrinkStyle={floatingLabelShrinkStyle}
         htmlFor={inputId}
         shrink={this.state.hasValue || this.state.isFocused || floatingLabelFixed}
         disabled={disabled}
@@ -447,14 +472,15 @@ class TextField extends Component {
           {...inputProps}
           onHeightChange={this.handleHeightChange}
         />
-      ) : (
-        <input
-          type={type}
-          style={prepareStyles(Object.assign(styles.inputNative, childStyleMerged))}
-          {...other}
-          {...inputProps}
-        />
-      );
+      ) : React.createElement(
+        IS_WEB ? 'input' : TextInput,
+        {
+          type,
+          style: prepareStyles(Object.assign(styles.inputNative, childStyleMerged)),
+          ...other,
+          ...inputProps,
+        }
+      )
     }
 
     let rootProps = {};
@@ -463,39 +489,39 @@ class TextField extends Component {
       rootProps = other;
     }
 
-    return (
-      <View
-        {...rootProps}
-        className={className}
-        style={prepareStyles(Object.assign(styles.root, style))}
-      >
-        {floatingLabelTextElement}
-        {hintText ?
-          <TextFieldHint
+    return React.createElement(
+      IS_WEB ? 'div' : View,
+      {
+        ...rootProps,
+        className: className,
+        style: prepareStyles(Object.assign(styles.root, style)),
+      },
+      [
+        floatingLabelTextElement,
+        hintText ?
+          (<TextFieldHint
             muiTheme={this.context.muiTheme}
             show={!(this.state.hasValue || (floatingLabelText && !this.state.isFocused)) ||
                   (!this.state.hasValue && floatingLabelText && floatingLabelFixed && !this.state.isFocused)}
             style={hintStyle}
             text={hintText}
-          /> :
-          null
-        }
-        {inputElement}
-        {underlineShow ?
-          <TextFieldUnderline
-            disabled={disabled}
-            disabledStyle={underlineDisabledStyle}
-            error={!!this.state.errorText}
-            errorStyle={errorStyle}
-            focus={this.state.isFocused}
-            focusStyle={underlineFocusStyle}
-            muiTheme={this.context.muiTheme}
-            style={underlineStyle}
-          /> :
-          null
-        }
-        {errorTextElement}
-      </View>
+          />) :
+          null,
+          inputElement,
+          underlineShow ?
+            (<TextFieldUnderline
+              disabled={disabled}
+              disabledStyle={underlineDisabledStyle}
+              error={!!this.state.errorText}
+              errorStyle={errorStyle}
+              focus={this.state.isFocused}
+              focusStyle={underlineFocusStyle}
+              muiTheme={this.context.muiTheme}
+              style={underlineStyle}
+            />) :
+            null,
+            errorTextElement
+        ]
     );
   }
 }

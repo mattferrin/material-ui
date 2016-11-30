@@ -1,4 +1,8 @@
 import React, {PropTypes} from 'react';
+import {
+  View,
+} from 'react-native';
+import {IS_WEB} from '../utils/platform';
 
 const Divider = (props, context) => {
   const {
@@ -23,8 +27,12 @@ const Divider = (props, context) => {
     },
   };
 
-  return (
-    <hr {...other} style={prepareStyles(Object.assign(styles.root, style))} />
+  return React.createElement(
+    IS_WEB ? 'hr' : View,
+    {
+      ...other,
+      style: prepareStyles(Object.assign(styles.root, style)),
+    }
   );
 };
 

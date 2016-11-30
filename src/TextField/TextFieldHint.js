@@ -1,5 +1,9 @@
 import React, {PropTypes} from 'react';
+import {
+  Text,
+} from 'react-native';
 import transitions from '../styles/transitions';
+import {IS_WEB} from '../utils/platform';
 
 function getStyles(props) {
   const {
@@ -33,10 +37,10 @@ const TextFieldHint = (props) => {
 
   const styles = getStyles(props);
 
-  return (
-    <View style={prepareStyles(Object.assign(styles.root, style))}>
-      {text}
-    </View>
+  return React.createElement(
+    IS_WEB ? 'div' : Text,
+    {style: prepareStyles(Object.assign(styles.root, style))},
+    text
   );
 };
 

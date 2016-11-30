@@ -1,5 +1,9 @@
 import React, {PropTypes} from 'react';
+import {
+  View,
+} from 'react-native';
 import transitions from '../styles/transitions';
+import {IS_WEB} from '../utils/platform';
 
 const propTypes = {
   /**
@@ -59,7 +63,9 @@ const TextFieldUnderline = (props) => {
     style,
   } = props;
 
-  const {color: errorStyleColor} = errorStyle;
+  const {
+    color: errorStyleColor,
+  } = errorStyle;
 
   const {
     prepareStyles,
@@ -72,7 +78,7 @@ const TextFieldUnderline = (props) => {
   } = muiTheme;
 
   const styles = {
-    root: {
+    root: Object.assign({
       border: 'none',
       borderBottom: 'solid 1px',
       borderColor: borderColor,
@@ -80,8 +86,9 @@ const TextFieldUnderline = (props) => {
       boxSizing: 'content-box',
       margin: 0,
       position: 'absolute',
+    }, IS_WEB ? {
       width: '100%',
-    },
+    } : {}),
     disabled: {
       borderBottom: 'dotted 2px',
       borderColor: disabledTextColor,
@@ -105,11 +112,19 @@ const TextFieldUnderline = (props) => {
   if (focus) focusedUnderline = Object.assign({}, focusedUnderline, {transform: 'scaleX(1)'});
   if (error) focusedUnderline = Object.assign({}, focusedUnderline, styles.error);
 
-  return (
-    <View>
-      <hr style={prepareStyles(underline)} />
-      <hr style={prepareStyles(focusedUnderline)} />
-    </View>
+  return React.createElement(
+    IS_WEB ? 'div' : View,
+    null,
+    [
+      React.createElement(
+        IS_WEB ? 'hr' : View,
+        {style: prepareStyles(underline)}
+      ),
+      React.createElement(
+        IS_WEB ? 'hr' : View,
+        {style: prepareStyles(focusedUnderline)}
+      )
+    ]
   );
 };
 

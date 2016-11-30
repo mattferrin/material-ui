@@ -1,6 +1,9 @@
 import React, {Component, PropTypes} from 'react';
+import {
+  View,
+} from 'react-native';
 import EventListener from 'react-event-listener';
-
+import {IS_WEB} from '../utils/platform'
 const rowsHeight = 24;
 
 function getStyles(props, context, state) {
@@ -8,14 +11,15 @@ function getStyles(props, context, state) {
     root: {
       position: 'relative', // because the shadow has position: 'absolute'
     },
-    textarea: {
+    textarea: Object.assign({
       height: state.height,
-      width: '100%',
       resize: 'none',
       font: 'inherit',
       padding: 0,
       cursor: 'inherit',
-    },
+    }, IS_WEB ? {
+      width: '100%',
+    } : {}),
     shadow: {
       resize: 'none',
       // Overflow also needed to here to remove the extra row
