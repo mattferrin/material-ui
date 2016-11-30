@@ -1,5 +1,7 @@
 import React, {Component, PropTypes} from 'react';
-
+import {
+  View,
+} from 'react-native';
 function getStyles(props, context) {
   const {cardMedia} = context.muiTheme;
 
@@ -14,10 +16,11 @@ function getStyles(props, context) {
       right: 0,
       left: 0,
     },
-    overlay: {
-      height: '100%',
+    overlay: Object.assign({
       position: 'relative',
-    },
+    }, IS_WEB ? {
+      height: '100%',
+    } : {}),
     overlayContent: {
       position: 'absolute',
       bottom: 0,
@@ -27,12 +30,13 @@ function getStyles(props, context) {
       background: cardMedia.overlayContentBackground,
     },
     media: {},
-    mediaChild: {
+    mediaChild: Object.assign({
       verticalAlign: 'top',
+    }, IS_WEB ? {
       maxWidth: '100%',
       minWidth: '100%',
       width: '100%',
-    },
+    } : {}),
   };
 }
 

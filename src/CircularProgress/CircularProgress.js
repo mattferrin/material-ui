@@ -1,4 +1,11 @@
 import React, {Component, PropTypes} from 'react';
+import {
+  View,
+} from 'react-native';
+import Svg, {
+  Circle
+} from '../react-native-svg';
+import {IS_WEB} from '../utils/platform';
 import autoPrefix from '../utils/autoPrefix';
 import transitions from '../styles/transitions';
 
@@ -125,18 +132,20 @@ class CircularProgress extends Component {
 
     step %= 3;
 
-    if (step === 0) {
-      path.style.strokeDasharray = `${getArcLength(0, this.props)}, ${getArcLength(1, this.props)}`;
-      path.style.strokeDashoffset = 0;
-      path.style.transitionDuration = '0ms';
-    } else if (step === 1) {
-      path.style.strokeDasharray = `${getArcLength(0.7, this.props)}, ${getArcLength(1, this.props)}`;
-      path.style.strokeDashoffset = getArcLength(-0.3, this.props);
-      path.style.transitionDuration = '750ms';
-    } else {
-      path.style.strokeDasharray = `${getArcLength(0.7, this.props)}, ${getArcLength(1, this.props)}`;
-      path.style.strokeDashoffset = getArcLength(-1, this.props);
-      path.style.transitionDuration = '850ms';
+    if (IS_WEB) {
+      if (step === 0) {
+        path.style.strokeDasharray = `${getArcLength(0, this.props)}, ${getArcLength(1, this.props)}`;
+        path.style.strokeDashoffset = 0;
+        path.style.transitionDuration = '0ms';
+      } else if (step === 1) {
+        path.style.strokeDasharray = `${getArcLength(0.7, this.props)}, ${getArcLength(1, this.props)}`;
+        path.style.strokeDashoffset = getArcLength(-0.3, this.props);
+        path.style.transitionDuration = '750ms';
+      } else {
+        path.style.strokeDasharray = `${getArcLength(0.7, this.props)}, ${getArcLength(1, this.props)}`;
+        path.style.strokeDashoffset = getArcLength(-1, this.props);
+        path.style.transitionDuration = '850ms';
+      }
     }
 
     this.scalePathTimer = setTimeout(() => this.scalePath(path, step + 1), step ? 750 : 250);
@@ -145,13 +154,17 @@ class CircularProgress extends Component {
   rotateWrapper(wrapper) {
     if (this.props.mode !== 'indeterminate') return;
 
-    autoPrefix.set(wrapper.style, 'transform', 'rotate(0deg)');
-    autoPrefix.set(wrapper.style, 'transitionDuration', '0ms');
+    if (IS_WEB) {
+      autoPrefix.set(wrapper.style, 'transform', 'rotate(0deg)');
+      autoPrefix.set(wrapper.style, 'transitionDuration', '0ms');
+    }
 
     setTimeout(() => {
-      autoPrefix.set(wrapper.style, 'transform', 'rotate(1800deg)');
-      autoPrefix.set(wrapper.style, 'transitionDuration', '10s');
-      autoPrefix.set(wrapper.style, 'transitionTimingFunction', 'linear');
+      if (IS_WEB) {
+        autoPrefix.set(wrapper.style, 'transform', 'rotate(1800deg)');
+        autoPrefix.set(wrapper.style, 'transitionDuration', '10s');
+        autoPrefix.set(wrapper.style, 'transitionTimingFunction', 'linear');
+      }
     }, 50);
 
     this.rotateWrapperTimer = setTimeout(() => this.rotateWrapper(wrapper), 10050);
@@ -169,26 +182,39 @@ class CircularProgress extends Component {
     const {prepareStyles} = this.context.muiTheme;
     const styles = getStyles(this.props, this.context);
 
-    return (
-      <View {...other} style={prepareStyles(Object.assign(styles.root, style))} >
-        <View ref="wrapper" style={prepareStyles(Object.assign(styles.wrapper, innerStyle))} >
-          <svg
-            viewBox={`0 0 ${size} ${size}`}
-            style={prepareStyles(styles.svg)}
-          >
-            <circle
-              ref="path"
-              style={prepareStyles(styles.path)}
-              cx={size / 2}
-              cy={size / 2}
-              r={(size - thickness) / 2}
-              fill="none"
-              strokeWidth={thickness}
-              strokeMiterlimit="20"
-            />
-          </svg>
-        </View>
-      </View>
+    return React.createElement(
+      IS_WEB ? 'div' : View,
+      {
+        ...other,
+        style: prepareStyles(Object.assign(styles.root, style)),
+      },
+      React.createElement(
+        IS_WEB ? 'div' : View,
+        {
+          ref: "wrapper",
+          style: prepareStyles(Object.assign(styles.wrapper, innerStyle))
+        },
+        React.createElement(
+          IS_WEB ? 'svg' : Svg,
+          {
+            viewBox: `0 0 ${size} ${size}`,
+            style: prepareStyles(styles.svg),
+          },
+          React.createElement(
+            IS_WEB ? 'circle' : Circle,
+            {
+              ref: "path",
+              style: prepareStyles(styles.path),
+              cx: size / 2,
+              cy: size / 2,
+              r: (size - thickness) / 2,
+              fill: "none",
+              strokeWidth: thickness,
+              strokeMiterlimit: 20,
+            }
+          )
+        )
+      )
     );
   }
 }

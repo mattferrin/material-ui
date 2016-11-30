@@ -159,19 +159,25 @@ class TouchRipple extends Component {
   }
 
   getRippleStyle(event) {
-    const el = ReactDOM.findDOMNode(this);
-    const elHeight = el.offsetHeight;
-    const elWidth = el.offsetWidth;
-    const offset = Dom.offset(el);
+    if (IS_WEB) {
+      const el = ReactDOM.findDOMNode(this);
+      const elHeight = el.offsetHeight;
+      const elWidth = el.offsetWidth;
+      const offset = Dom.offset(el);
+    }
     const isTouchEvent = event.touches && event.touches.length;
     const pageX = isTouchEvent ? event.touches[0].pageX : event.pageX;
     const pageY = isTouchEvent ? event.touches[0].pageY : event.pageY;
-    const pointerX = pageX - offset.left;
-    const pointerY = pageY - offset.top;
+    if (IS_WEB) {
+      const pointerX = pageX - offset.left;
+      const pointerY = pageY - offset.top;
+    }
     const topLeftDiag = this.calcDiag(pointerX, pointerY);
-    const topRightDiag = this.calcDiag(elWidth - pointerX, pointerY);
-    const botRightDiag = this.calcDiag(elWidth - pointerX, elHeight - pointerY);
-    const botLeftDiag = this.calcDiag(pointerX, elHeight - pointerY);
+    if (IS_WEB) {
+      const topRightDiag = this.calcDiag(elWidth - pointerX, pointerY);
+      const botRightDiag = this.calcDiag(elWidth - pointerX, elHeight - pointerY);
+      const botLeftDiag = this.calcDiag(pointerX, elHeight - pointerY);
+    }
     const rippleRadius = Math.max(
       topLeftDiag, topRightDiag, botRightDiag, botLeftDiag
     );
@@ -227,7 +233,10 @@ class TouchRipple extends Component {
         onTouchStart: this.handleTouchStart,
         onTouchEnd: this.handleTouchEnd,
       },
-      [rippleGroup, children]
+      [
+        rippleGroup,
+        children
+      ]
     );
   }
 }
