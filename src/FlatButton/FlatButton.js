@@ -214,7 +214,7 @@ class FlatButton extends Component {
     const labelStyleIcon = {};
 
     if (icon) {
-      preIconStyles = Object.assign({
+      let preIconStyles = Object.assign({
         marginLeft: label && labelPosition !== 'before' ? 12 : 0,
         marginRight: label && labelPosition === 'before' ? 12 : 0,
       }, IS_WEB ? {
