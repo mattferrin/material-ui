@@ -1,6 +1,7 @@
 import React, {Component, PropTypes, isValidElement} from 'react';
 import {
   View,
+  Text,
 } from 'react-native'
 import Avatar from '../Avatar';
 import {
@@ -19,12 +20,15 @@ function getStyles(props, context) {
       position: 'relative',
       whiteSpace: 'nowrap',
     },
-    text: {
+    text: Object.assign({
       display: 'inline-block',
       verticalAlign: 'top',
       whiteSpace: 'normal',
+    }, IS_WEB ? {
       paddingRight: '90px',
-    },
+    } : {
+      paddingRight: 90,
+    }),
     avatar: {
       marginRight: 16,
     },
@@ -151,7 +155,7 @@ class CardHeader extends Component {
     }
 
     let Div = webOrNative('div', View);
-    let Span = webOrNative('span', View);
+    let Span = webOrNative('span', Text);
 
     return (
       <Div {...other} style={prepareStyles(Object.assign(styles.root, style))}>

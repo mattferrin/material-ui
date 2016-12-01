@@ -15,7 +15,7 @@ function getStyles(props, context) {
   const {avatar} = context.muiTheme;
 
   const styles = {
-    root: {
+    root: Object.assign({
       color: color || avatar.color,
       backgroundColor: backgroundColor || avatar.backgroundColor,
       userSelect: 'none',
@@ -23,10 +23,13 @@ function getStyles(props, context) {
       alignItems: 'center',
       justifyContent: 'center',
       fontSize: size / 2,
-      borderRadius: '50%',
       height: size,
       width: size,
-    },
+    }, IS_WEB ? {
+      borderRadius: '50%',
+    } : {
+      borderRadius: size / 2,
+    }),
     icon: {
       color: color || avatar.color,
       width: size * 0.6,
