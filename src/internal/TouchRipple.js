@@ -151,11 +151,15 @@ class TouchRipple extends Component {
     // Note that when scolling Chrome throttles this event to every 200ms
     // Also note we don't listen for scroll events directly as there's no general
     // way to cover cases like scrolling within containers on the page
-    document.body.addEventListener('touchmove', this.handleTouchMove);
+    if (IS_WEB) {
+      document.body.addEventListener('touchmove', this.handleTouchMove);
+    }
   }
 
   stopListeningForScrollAbort() {
-    document.body.removeEventListener('touchmove', this.handleTouchMove);
+    if (IS_WEB) {
+      document.body.removeEventListener('touchmove', this.handleTouchMove);
+    }
   }
 
   getRippleStyle(event) {
@@ -164,34 +168,32 @@ class TouchRipple extends Component {
       const elHeight = el.offsetHeight;
       const elWidth = el.offsetWidth;
       const offset = Dom.offset(el);
-    }
-    const isTouchEvent = event.touches && event.touches.length;
-    const pageX = isTouchEvent ? event.touches[0].pageX : event.pageX;
-    const pageY = isTouchEvent ? event.touches[0].pageY : event.pageY;
-    if (IS_WEB) {
+      const isTouchEvent = event.touches && event.touches.length;
+      const pageX = isTouchEvent ? event.touches[0].pageX : event.pageX;
+      const pageY = isTouchEvent ? event.touches[0].pageY : event.pageY;
       const pointerX = pageX - offset.left;
       const pointerY = pageY - offset.top;
-    }
-    const topLeftDiag = this.calcDiag(pointerX, pointerY);
-    if (IS_WEB) {
+      const topLeftDiag = this.calcDiag(pointerX, pointerY);
       const topRightDiag = this.calcDiag(elWidth - pointerX, pointerY);
       const botRightDiag = this.calcDiag(elWidth - pointerX, elHeight - pointerY);
       const botLeftDiag = this.calcDiag(pointerX, elHeight - pointerY);
-    }
-    const rippleRadius = Math.max(
-      topLeftDiag, topRightDiag, botRightDiag, botLeftDiag
-    );
-    const rippleSize = rippleRadius * 2;
-    const left = pointerX - rippleRadius;
-    const top = pointerY - rippleRadius;
+      const rippleRadius = Math.max(
+        topLeftDiag, topRightDiag, botRightDiag, botLeftDiag
+      );
+      const rippleSize = rippleRadius * 2;
+      const left = pointerX - rippleRadius;
+      const top = pointerY - rippleRadius;
 
-    return {
-      directionInvariant: true,
-      height: rippleSize,
-      width: rippleSize,
-      top: top,
-      left: left,
-    };
+      return {
+        directionInvariant: true,
+        height: rippleSize,
+        width: rippleSize,
+        top: top,
+        left: left,
+      };
+    } else {
+      return {};
+    }
   }
 
   calcDiag(a, b) {
@@ -234,7 +236,7 @@ class TouchRipple extends Component {
         onTouchEnd: this.handleTouchEnd,
       },
       [
-        rippleGroup,
+        IS_WEB ? rippleGroup : <View />,
         children
       ]
     );

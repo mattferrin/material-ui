@@ -1,5 +1,9 @@
 import React, {Component, PropTypes, isValidElement} from 'react';
+import {
+  View,
+} from 'react-native'
 import Avatar from '../Avatar';
+import {IS_WEB} from '../utils/platform'
 
 function getStyles(props, context) {
   const {card} = context.muiTheme;
@@ -143,19 +147,33 @@ class CardHeader extends Component {
       avatar = <Avatar src={avatarProp} style={styles.avatar} />;
     }
 
+    let webOrNative = (web, native) => {
+      return React.createClass({
+        render: function() {
+          return React.createElement(
+            IS_WEB ? web : native,
+            this.props,
+            this.children
+          );
+        }
+      });
+    };
+    let Div = webOrNative('div', View);
+    let Span = webOrNative('span', View);
+
     return (
-      <View {...other} style={prepareStyles(Object.assign(styles.root, style))}>
+      <Div {...other} style={prepareStyles(Object.assign(styles.root, style))}>
         {avatar}
-        <View style={prepareStyles(Object.assign(styles.text, textStyle))}>
-          <View style={prepareStyles(Object.assign(styles.title, titleStyle))}>
+        <Div style={prepareStyles(Object.assign(styles.text, textStyle))}>
+          <Span style={prepareStyles(Object.assign(styles.title, titleStyle))}>
             {title}
-          </View>
-          <View style={prepareStyles(Object.assign(styles.subtitle, subtitleStyle))}>
+          </Span>
+          <Span style={prepareStyles(Object.assign(styles.subtitle, subtitleStyle))}>
             {subtitle}
-          </View>
-        </View>
+          </Span>
+        </Div>
         {children}
-      </View>
+      </Div>
     );
   }
 }

@@ -2,6 +2,8 @@ import React, {Component, PropTypes} from 'react';
 import {
   View,
 } from 'react-native';
+import {IS_WEB} from '../utils/platform';
+
 function getStyles(props, context) {
   const {cardMedia} = context.muiTheme;
 
@@ -20,7 +22,9 @@ function getStyles(props, context) {
       position: 'relative',
     }, IS_WEB ? {
       height: '100%',
-    } : {}),
+    } : {
+      flex: 1,
+    }),
     overlayContent: {
       position: 'absolute',
       bottom: 0,
@@ -36,7 +40,9 @@ function getStyles(props, context) {
       maxWidth: '100%',
       minWidth: '100%',
       width: '100%',
-    } : {}),
+    } : {
+      flex: 1,
+    }),
   };
 }
 
@@ -130,20 +136,41 @@ class CardMedia extends Component {
       }
     });
 
-    return (
-      <View {...other} style={prepareStyles(rootStyle)}>
-        <View style={prepareStyles(extendedMediaStyle)}>
-          {styledChildren}
-        </View>
-        {overlay ?
-          <View style={prepareStyles(extendedOverlayContainerStyle)}>
-            <View style={prepareStyles(extendedOverlayStyle)}>
-              <View style={prepareStyles(extendedOverlayContentStyle)}>
-                {overlayChildren}
-              </View>
-            </View>
-          </View> : ''}
-      </View>
+    let Div = IS_WEB ? 'div' : View;
+    return React.createElement(
+      Div,
+      {
+        ...other,
+        style: prepareStyles(rootStyle),
+      },
+      [
+        React.createElement(
+          Div,
+          {
+            style: prepareStyles(extendedMediaStyle),
+            styledChildren
+          }
+        ),
+        overlay ? React.createElement(
+          Div,
+          {
+            style: prepareStyles(extendedOverlayContainerStyle),
+          },
+          React.createElement(
+            Div,
+            {
+              style: prepareStyles(extendedOverlayStyle),
+            },
+            React.createElement(
+              Div,
+              {
+                style: prepareStyles(extendedOverlayContentStyle),
+              },
+              overlayChildren
+            )
+          )
+        ): React.createElement(Div, null)
+      ]
     );
   }
 }

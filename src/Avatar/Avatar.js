@@ -1,4 +1,9 @@
 import React, {Component, PropTypes} from 'react';
+import {
+  Image,
+  View,
+} from 'react-native';
+import {IS_WEB} from '../utils/platform';
 
 function getStyles(props, context) {
   const {
@@ -94,27 +99,26 @@ class Avatar extends Component {
     const styles = getStyles(this.props, this.context);
 
     if (src) {
-      return (
-        <img
-          style={prepareStyles(Object.assign(styles.root, style))}
-          {...other}
-          src={src}
-          className={className}
-        />
-      );
+      return React.createElement(
+        IS_WEB ? 'img' : Image, {
+          style: prepareStyles(Object.assign(styles.root, style)),
+          ...other,
+          source: src,
+          className
+        });
     } else {
-      return (
-        <View
-          {...other}
-          style={prepareStyles(Object.assign(styles.root, style))}
-          className={className}
-        >
-          {icon && React.cloneElement(icon, {
+      return React.createElement(
+        IS_WEB ? 'div' : View, {
+          ...other,
+          style: prepareStyles(Object.assign(styles.root, style)),
+          className
+        }, [
+          icon && React.cloneElement(icon, {
             color: styles.icon.color,
             style: Object.assign(styles.icon, icon.props.style),
-          })}
-          {this.props.children}
-        </View>
+          }),
+          this.props.children,
+        ]
       );
     }
   }

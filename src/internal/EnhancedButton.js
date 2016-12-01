@@ -1,7 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import {
   Text,
-  View
+  TouchableHighlight,
+  View,
 } from 'react-native';
 import {createChildFragment} from '../utils/childUtils';
 import Events from '../utils/events';
