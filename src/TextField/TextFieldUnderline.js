@@ -1,9 +1,13 @@
 import React, {PropTypes} from 'react';
 import {
   View,
+  Text,
 } from 'react-native';
 import transitions from '../styles/transitions';
-import {IS_WEB} from '../utils/platform';
+import {
+  IS_WEB,
+  webOrNative,
+} from '../utils/platform';
 
 const propTypes = {
   /**
@@ -79,7 +83,9 @@ const TextFieldUnderline = (props) => {
 
   const styles = {
     root: Object.assign({
-      border: 'none',
+      borderTop: 'none',
+      borderLeft: 'none',
+      borderRight: 'none',
       borderBottom: 'solid 1px',
       borderColor: borderColor,
       bottom: 8,
@@ -93,16 +99,18 @@ const TextFieldUnderline = (props) => {
       borderBottom: 'dotted 2px',
       borderColor: disabledTextColor,
     },
-    focus: {
+    focus: Object.assign({
       borderBottom: 'solid 2px',
       borderColor: focusColor,
-      transform: 'scaleX(0)',
       transition: transitions.easeOut(),
-    },
-    error: {
+    }, IS_WEB ? {
+      transform: 'scaleX(0)',
+    } : {}),
+    error: Object.assign({
       borderColor: errorStyleColor ? errorStyleColor : errorColor,
+    }, IS_WEB ? {
       transform: 'scaleX(1)',
-    },
+    } : {}),
   };
 
   let underline = Object.assign({}, styles.root, style);
@@ -112,20 +120,11 @@ const TextFieldUnderline = (props) => {
   if (focus) focusedUnderline = Object.assign({}, focusedUnderline, {transform: 'scaleX(1)'});
   if (error) focusedUnderline = Object.assign({}, focusedUnderline, styles.error);
 
-  return React.createElement(
-    IS_WEB ? 'div' : View,
-    null,
-    [
-      React.createElement(
-        IS_WEB ? 'hr' : View,
-        {style: prepareStyles(underline)}
-      ),
-      React.createElement(
-        IS_WEB ? 'hr' : View,
-        {style: prepareStyles(focusedUnderline)}
-      )
-    ]
-  );
+  const Div = webOrNative('div', View);
+  return (<Div>
+    <Div style={prepareStyles(underline)} />
+    <Div style={prepareStyles(focusedUnderline)} />
+  </Div>)
 };
 
 TextFieldUnderline.propTypes = propTypes;

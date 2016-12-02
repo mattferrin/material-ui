@@ -2,7 +2,10 @@ import React, {Component, PropTypes} from 'react';
 import {
   View,
 } from 'react-native';
-import {IS_WEB} from '../utils/platform';
+import {
+  IS_WEB,
+  webOrNative
+} from '../utils/platform';
 
 function getStyles(props, context) {
   const {cardMedia} = context.muiTheme;
@@ -22,9 +25,7 @@ function getStyles(props, context) {
       position: 'relative',
     }, IS_WEB ? {
       height: '100%',
-    } : {
-      flex: 1,
-    }),
+    } : {}),
     overlayContent: {
       position: 'absolute',
       bottom: 0,
@@ -40,9 +41,7 @@ function getStyles(props, context) {
       maxWidth: '100%',
       minWidth: '100%',
       width: '100%',
-    } : {
-      flex: 1,
-    }),
+    } : {}),
   };
 }
 
@@ -136,42 +135,20 @@ class CardMedia extends Component {
       }
     });
 
-    let Div = IS_WEB ? 'div' : View;
-    return React.createElement(
-      Div,
-      {
-        ...other,
-        style: prepareStyles(rootStyle),
-      },
-      [
-        React.createElement(
-          Div,
-          {
-            style: prepareStyles(extendedMediaStyle),
-            styledChildren
-          }
-        ),
-        overlay ? React.createElement(
-          Div,
-          {
-            style: prepareStyles(extendedOverlayContainerStyle),
-          },
-          React.createElement(
-            Div,
-            {
-              style: prepareStyles(extendedOverlayStyle),
-            },
-            React.createElement(
-              Div,
-              {
-                style: prepareStyles(extendedOverlayContentStyle),
-              },
-              overlayChildren
-            )
-          )
-        ): React.createElement(Div, null)
-      ]
-    );
+    let Div = webOrNative('div', View);
+    return (<Div {...other} style={prepareStyles(rootStyle)}>
+        <Div style={prepareStyles(extendedMediaStyle)}>
+          {styledChildren}
+        </Div>
+        {overlay ?
+          <Div style={prepareStyles(extendedOverlayContainerStyle)}>
+            <Div style={prepareStyles(extendedOverlayStyle)}>
+              <Div style={prepareStyles(extendedOverlayContentStyle)}>
+                {overlayChildren}
+              </Div>
+            </Div>
+          </Div> : <Div />}
+      </Div>);
   }
 }
 

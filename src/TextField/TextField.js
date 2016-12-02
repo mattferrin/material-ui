@@ -1,12 +1,16 @@
 import React, {Component, PropTypes} from 'react';
 import {
+  Text,
   TextInput,
   View,
 } from 'react-native';
 import ReactDOM from 'react-dom';
 import shallowEqual from 'recompose/shallowEqual';
 import transitions from '../styles/transitions';
-import {IS_WEB} from '../utils/platform';
+import {
+  IS_WEB,
+  webOrNative,
+} from '../utils/platform';
 import EnhancedTextarea from './EnhancedTextarea';
 import TextFieldHint from './TextFieldHint';
 import TextFieldLabel from './TextFieldLabel';
@@ -489,40 +493,39 @@ class TextField extends Component {
       rootProps = other;
     }
 
-    return React.createElement(
-      IS_WEB ? 'div' : View,
-      {
-        ...rootProps,
-        className: className,
-        style: prepareStyles(Object.assign(styles.root, style)),
-      },
-      [
-        floatingLabelTextElement,
-        hintText ?
-          (<TextFieldHint
-            muiTheme={this.context.muiTheme}
-            show={!(this.state.hasValue || (floatingLabelText && !this.state.isFocused)) ||
-                  (!this.state.hasValue && floatingLabelText && floatingLabelFixed && !this.state.isFocused)}
-            style={hintStyle}
-            text={hintText}
-          />) :
-          null,
-          inputElement,
-          underlineShow ?
-            (<TextFieldUnderline
-              disabled={disabled}
-              disabledStyle={underlineDisabledStyle}
-              error={!!this.state.errorText}
-              errorStyle={errorStyle}
-              focus={this.state.isFocused}
-              focusStyle={underlineFocusStyle}
-              muiTheme={this.context.muiTheme}
-              style={underlineStyle}
-            />) :
-            null,
-            errorTextElement
-        ]
-    );
+    let Div = webOrNative('div', View)
+    return (<Div
+      {...rootProps}
+      className={className}
+      style={prepareStyles(Object.assign(styles.root, style))}
+    >
+      {floatingLabelTextElement}
+      {hintText ?
+        <TextFieldHint
+          muiTheme={this.context.muiTheme}
+          show={!(this.state.hasValue || (floatingLabelText && !this.state.isFocused)) ||
+                (!this.state.hasValue && floatingLabelText && floatingLabelFixed && !this.state.isFocused)}
+          style={hintStyle}
+          text={hintText}
+        /> :
+        null
+      }
+      {inputElement}
+      {underlineShow ?
+        <TextFieldUnderline
+          disabled={disabled}
+          disabledStyle={underlineDisabledStyle}
+          error={!!this.state.errorText}
+          errorStyle={errorStyle}
+          focus={this.state.isFocused}
+          focusStyle={underlineFocusStyle}
+          muiTheme={this.context.muiTheme}
+          style={underlineStyle}
+        /> :
+        null
+      }
+      {errorTextElement}
+    </Div>);
   }
 }
 

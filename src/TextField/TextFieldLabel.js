@@ -1,23 +1,35 @@
 import React, {PropTypes} from 'react';
+import {
+  Text,
+} from 'react-native';
 import transitions from '../styles/transitions';
+import {
+  IS_WEB,
+  webOrNative,
+} from '../utils/platform';
 
 function getStyles(props) {
-  const defaultStyles = {
+  const defaultStyles = Object.assign({
     position: 'absolute',
-    lineHeight: '22px',
     top: 38,
     transition: transitions.easeOut(),
     zIndex: 1, // Needed to display label above Chrome's autocomplete field background
-    transform: 'scale(1) translate(0, 0)',
     transformOrigin: 'left top',
     pointerEvents: 'auto',
     userSelect: 'none',
-  };
+  }, IS_WEB ? {
+    lineHeight: '22px',
+    transform: 'scale(1) translate(0, 0)',
+  } : {
+    lineHeight: 22,
+  });
 
-  const shrinkStyles = props.shrink ? Object.assign({
-    transform: 'scale(0.75) translate(0, -28px)',
+  const preShrinkStyles = Object.assign({
     pointerEvents: 'none',
-  }, props.shrinkStyle) : null;
+  }. IS_WEB ? {
+    transform: 'scale(0.75) translate(0, -28px)',
+  } : {});
+  const shrinkStyles = props.shrink ? Object.assign(preShrinkStyles, props.shrinkStyle) : null;
 
   return {
     root: Object.assign(defaultStyles, props.style, shrinkStyles),
@@ -36,15 +48,16 @@ const TextFieldLabel = (props) => {
   const {prepareStyles} = muiTheme;
   const styles = getStyles(props);
 
+  let Label = webOrNative('label', Text);
   return (
-    <label
+    <Label
       className={className}
       style={prepareStyles(styles.root)}
       htmlFor={htmlFor}
       onTouchTap={onTouchTap}
     >
       {children}
-    </label>
+    </Label>
   );
 };
 
