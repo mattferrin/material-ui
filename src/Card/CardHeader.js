@@ -13,13 +13,15 @@ function getStyles(props, context) {
   const {card} = context.muiTheme;
 
   return {
-    root: {
+    root: Object.assign({
       padding: 16,
       fontWeight: card.fontWeight,
       boxSizing: 'border-box',
       position: 'relative',
       whiteSpace: 'nowrap',
-    },
+    }, IS_WEB ? {} : {
+      flexDirection: 'row',
+    }),
     text: Object.assign({
       display: 'inline-block',
       verticalAlign: 'top',

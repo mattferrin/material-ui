@@ -33,7 +33,6 @@ export function getStyles(props, context) {
       display: 'flex',
     } : {
       alignItems: 'center',
-      flex: 1,
       flexDirection: 'row',
       height: appBar.height,
       paddingLeft: 16,
