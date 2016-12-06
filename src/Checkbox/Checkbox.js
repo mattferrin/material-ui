@@ -1,8 +1,16 @@
 import React, {Component, PropTypes} from 'react';
+import {
+  Text,
+  View,
+} from 'react-native';
 import EnhancedSwitch from '../internal/EnhancedSwitch';
 import transitions from '../styles/transitions';
 import CheckboxOutline from '../svg-icons/toggle/check-box-outline-blank';
 import CheckboxChecked from '../svg-icons/toggle/check-box';
+import {
+  IS_WEB,
+  webOrNative,
+} from '../utils/platform'
 
 function getStyles(props, context) {
   const {checkbox} = context.muiTheme;
@@ -13,23 +21,25 @@ function getStyles(props, context) {
       height: checkboxSize,
       width: checkboxSize,
     },
-    check: {
+    check: Object.assign({
       position: 'absolute',
       opacity: 0,
-      transform: 'scale(0)',
       transitionOrigin: '50% 50%',
       transition: `${transitions.easeOut('450ms', 'opacity', '0ms')}, ${
           transitions.easeOut('0ms', 'transform', '450ms')
         }`,
       fill: checkbox.checkedColor,
-    },
-    checkWhenSwitched: {
+    }, IS_WEB ? {
+      transform: 'scale(0)',
+    } : {}),
+    checkWhenSwitched: Object.assign({
       opacity: 1,
-      transform: 'scale(1)',
       transition: `${transitions.easeOut('0ms', 'opacity', '0ms')}, ${
           transitions.easeOut('800ms', 'transform', '0ms')
         }`,
-    },
+    }, IS_WEB ? {
+      transform: 'scale(1)',
+    } : {}),
     checkWhenDisabled: {
       fill: checkbox.disabledColor,
     },
@@ -198,11 +208,12 @@ class Checkbox extends Component {
       style: boxStyles,
     });
 
+    let Div = webOrNative('div', View);
     const checkboxElement = (
-      <View>
+      <Div>
         {unCheckedElement}
         {checkedElement}
-      </View>
+      </Div>
     );
 
     const rippleColor = this.state.switched ? checkStyles.fill : boxStyles.fill;

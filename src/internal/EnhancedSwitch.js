@@ -1,7 +1,15 @@
 import React, {Component, PropTypes} from 'react';
+import {
+  Text,
+  View,
+} from 'react-native';
 import EventListener from 'react-event-listener';
 import keycode from 'keycode';
 import transitions from '../styles/transitions';
+import {
+  IS_WEB,
+  webOrNative,
+} from '../utils/platform';
 import FocusRipple from './FocusRipple';
 import TouchRipple from './TouchRipple';
 import Paper from './../Paper';
@@ -11,32 +19,35 @@ function getStyles(props, context) {
   const {baseTheme} = context.muiTheme;
 
   return {
-    root: {
+    root: Object.assign({
       cursor: props.disabled ? 'not-allowed' : 'pointer',
       position: 'relative',
       overflow: 'visible',
       display: 'table',
+    }, IS_WEB ? {
       height: 'auto',
       width: '100%',
-    },
-    input: {
+    } : {}),
+    input: Object.assign({
       position: 'absolute',
       cursor: 'inherit',
       pointerEvents: 'all',
       opacity: 0,
-      width: '100%',
-      height: '100%',
       zIndex: 2,
       left: 0,
       boxSizing: 'border-box',
       padding: 0,
       margin: 0,
-    },
-    controls: {
-      display: 'flex',
+    }, IS_WEB ? {
       width: '100%',
       height: '100%',
-    },
+    } : {}),
+    controls: Object.assign({
+      display: 'flex',
+    }, IS_WEB ? {
+      width: '100%',
+      height: '100%',
+    } : {}),
     label: {
       float: 'left',
       position: 'relative',
@@ -292,10 +303,11 @@ class EnhancedSwitch extends Component {
       wrapStyles.marginRight /= 2;
     }
 
+    let Label = webOrNative('label', Text);
     const labelElement = label && (
-      <label style={prepareStyles(Object.assign(styles.label, labelStyle))}>
+      <Label style={prepareStyles(Object.assign(styles.label, labelStyle))}>
         {label}
-      </label>
+      </Label>
     );
 
     const showTouchRipple = !disabled && !disableTouchRipple;
@@ -327,8 +339,11 @@ class EnhancedSwitch extends Component {
       showFocusRipple ? focusRipple : null,
     ];
 
+    let Div = webOrNative('div', View);
+    let Input = webOrNative('input', View);
+
     const inputElement = (
-      <input
+      <Input
         {...other}
         ref="checkbox"
         type={inputType}
@@ -350,31 +365,31 @@ class EnhancedSwitch extends Component {
     // If toggle component (indicated by whether the style includes thumb) manually lay out
     // elements in order to nest ripple elements
     const switchOrThumbElement = !thumbStyle ? (
-      <View style={prepareStyles(wrapStyles)}>
+      <Div style={prepareStyles(wrapStyles)}>
         {switchElement}
         {ripples}
-      </View>
+      </Div>
     ) : (
-      <View style={prepareStyles(wrapStyles)}>
-        <View style={prepareStyles(Object.assign({}, trackStyle))} />
+      <Div style={prepareStyles(wrapStyles)}>
+        <Div style={prepareStyles(Object.assign({}, trackStyle))} />
         <Paper style={thumbStyle} zDepth={1} circle={true}> {ripples} </Paper>
-      </View>
+      </Div>
     );
 
     const elementsInOrder = labelPosition === 'right' ? (
-      <View style={styles.controls}>
+      <Div style={styles.controls}>
         {switchOrThumbElement}
         {labelElement}
-      </View>
+      </Div>
     ) : (
-      <View style={styles.controls}>
+      <Div style={styles.controls}>
         {labelElement}
         {switchOrThumbElement}
-      </View>
+      </Div>
     );
 
     return (
-      <View ref="root" className={className} style={prepareStyles(Object.assign(styles.root, style))}>
+      <Div ref="root" className={className} style={prepareStyles(Object.assign(styles.root, style))}>
         <EventListener
           target="window"
           onKeyDown={this.handleKeyDown}
@@ -382,7 +397,7 @@ class EnhancedSwitch extends Component {
         />
         {inputElement}
         {elementsInOrder}
-      </View>
+      </Div>
     );
   }
 }
